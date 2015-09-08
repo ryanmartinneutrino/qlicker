@@ -1,0 +1,16 @@
+
+<template name="newQuestionForm">
+{{#if currentUser}}
+<h2>Add a question</h2>
+    <form class="new-question">
+      <input type="text" name="qtitle" placeholder="Type to add new question" />
+      {{#each newanswers}}
+      <input type="text" name="{{newansnum}}" placeholder="Type to add answer" />
+      {{/each}}
+      <button type="button" class="add-answer">Add answer</button>
+      <button type="button" class="remove-answer">Remove answer</button>
+      <button type="submit">Add question</button>
+    </form>
+{{/if}}
+</template>
+

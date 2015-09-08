@@ -7,46 +7,12 @@
     <header>
       <h1>Qlicker</h1>
     </header>
+    {{> loginButtons align="right"}}
 
-    {{> questionlist}}
+    {{> questionList}}
 
-    {{> newquestion }}
+    {{> newQuestionForm}}
 
 </div>
 </body>
 
-<template name="newquestion">
-    <form class="new-question">
-      <input type="text" name="qtitle" placeholder="Type to add new question" />
-      {{#each newanswers}}
-      <input type="text" name="{{newansnum}}" placeholder="Type to add answer" />
-      {{/each}}
-      <button type="button" class="add-answer">Add answer</button>
-      <button type="submit">Add question</button>
-    </form>
-</template>
-
-
-<template name="questionlist">
-  <ul>
-  {{#each questions}}
-  <li>{{>question}}</li>
-  <br>
-  {{/each}}
-  </ul>
-</template>
-
-
-<template name="question">
-  <button class="delete">&times;</button>
-  {{qtitle}}
-  <ul>
-  {{#each answers}}
-  <li>{{>answer}}</li>
-  {{/each}}
-  </ul>
-</template>
-
-<template name="answer">
-{{ans}}
-</template>
