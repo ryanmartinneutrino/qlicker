@@ -1,0 +1,9 @@
+<template name="question">
+  <div class="btn-group-vertical-justified">
+    <button type="button" class="btn btn-default"> <button class="delete">&times;</button>  {{qtitle}}</button>
+    {{#each answers}}
+      <button type="button" class="btn btn-primary answer">{{ans}}</button>
+    {{/each}}
+  </div>
+</template>
+

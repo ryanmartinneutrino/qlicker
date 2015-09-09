@@ -2,10 +2,12 @@
 <template name="newQuestionForm">
 {{#if currentUser}}
 <h2>Add a question</h2>
-    <form class="new-question">
+    <form class="new-question form-horizontal" role="form">
       <input type="text" name="qtitle" placeholder="Type to add new question" />
+      <br>
       {{#each newanswers}}
-      <input type="text" name="{{newansnum}}" placeholder="Type to add answer" />
+        <input type="text" name="{{newansnum}}" placeholder="Type to add answer" />
+        <br>
       {{/each}}
       <button type="button" class="add-answer">Add answer</button>
       <button type="button" class="remove-answer">Remove answer</button>
