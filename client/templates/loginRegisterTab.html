@@ -3,18 +3,12 @@
   <div class="row">
     <div class="col-md-12">
         <div class="col-md-6 col-md-offset-3 column">
-          {{#if currentUser}}
-          {{else}}
+          {{#unless currentUser}}
           <ul class="nav nav-tabs">
-           {{#if loginTabActive}} 
-            <li  class="active"><a href="/login">Login </a></li>
-            <li><a href="/register">Register</a> </li>
-           {{else}}
-            <li><a href="/login">Login </a></li>
-            <li class="active"><a href="/register">Register</a> </li>
-           {{/if}}
+            <li class="{{#if loginTabActive}}active{{/if}}"><a href="/login">Login </a></li>
+            <li class="{{#unless loginTabActive}}active{{/unless}}"><a href="/register">Register</a> </li>
           </ul>
-         {{/if}}
+         {{/unless}}
         </div>
     </div>
   </div>
