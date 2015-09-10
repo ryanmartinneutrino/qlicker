@@ -1,7 +1,7 @@
 Template.login.onRendered(function(){
   var validator =  $('.login').validate({
     submitHandler:  function(event){
-      //event.preventDefault();
+     // event.preventDefault();
       var email = $('[name=email]').val();
       var password = $('[name=password]').val();
 
@@ -18,4 +18,11 @@ Template.login.onRendered(function(){
   });
 });
 
+Template.login.events({
+  "submit form": function(event){
+    event.preventDefault();
+    //rest of submit is handled by the submitHandler of the validator
+  }
 
+
+});

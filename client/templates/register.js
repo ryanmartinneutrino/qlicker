@@ -1,7 +1,7 @@
 Template.register.onRendered(function(){
   var validator =  $('.register').validate({
     submitHandler:  function(event){
-      //event.preventDefault();
+      event.preventDefault();
       var email = $('[name=email]').val();
       var password = $('[name=password]').val();
       var passwordconf = $('[name=password]').val();
@@ -35,3 +35,10 @@ Template.register.helpers({
   }
 });
 
+Template.register.events({
+  "submit form": function(event){
+    event.preventDefault();
+    //rest of submit is handled by the submitHandler of the validator
+  }
+});
+//
