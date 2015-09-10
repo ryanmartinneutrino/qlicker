@@ -36,7 +36,11 @@ Meteor.startup(function(){
       course_id:"xxxx",
       qtitle:"Who is Einstein?",
       imgLink:"http://vignette3.wikia.nocookie.net/adventuretimewithfinnandjake/images/5/59/Hipster-llama-l.jpg/revision/latest?cb=20140531170030",
-      answers:[{ans:"A Physicist"}, {ans:"A comedian"}, {ans:"A baby"} ],
+      answers:[
+        {ans:"A Physicist", correct:true},
+        {ans:"A comedian", correct:true},
+        {ans:"A baby", correct:false} 
+      ],
       correctAnswers:[{correctAns:answers[0]}],      
       sessionUsed_ids:[{session_id:"xxxx"},{session_id:"xxxx"} ],
       createdBy_id:"xxxx"

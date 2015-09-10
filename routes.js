@@ -3,7 +3,7 @@ Router.configure({
 });
 
 Router.route('/',{
-  template: 'default-app'
+  template: 'default_app'
 });
 Router.route('/register');
 Router.route('/login');
