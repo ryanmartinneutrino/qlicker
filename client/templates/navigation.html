@@ -1,31 +1,30 @@
 <template name="navigation">
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">Qlicker</a>
+       <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Qlicker</a>
+       </div>
     </div>
     <div>
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
       {{#if currentUser}}
-        <li class="active"><a href="{{pathFor 'newCourse'}}">New Course</a></li>
-        <li><a href="#">Page 1</a></li>
-        <li><a href="#">Page 2</a></li> 
-        <li><a href="#">Page 3</a></li> 
+        <li><a href="/Logout">Logout</a></li> 
+        {{> navlinks}}
       {{/if}}
       </ul>
+</div>
     </div>
   </div>
 </nav>
 
-  <div class="row">
-    <div class="col-md-12">
-        <div class="col-md-6 col-md-offset-3 column">
-          {{#if currentUser}}
-            <button class="btn btn-danger logout"> Logout</button>
-         {{/if}}
-        </div>
-    </div>
-  </div>
 </template>
 
 

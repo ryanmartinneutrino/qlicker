@@ -1,0 +1,19 @@
+<template name="navlinks">
+
+<li class="{{ activeIfTemplateIs 'newCourse' }}">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Courses<b class="caret"></b></a>
+    <ul class="dropdown-menu multi-level">
+      <li>
+        <a href={{pathFor 'newCourse'}}>Create a new course</a>
+      </li>
+      <li class="divider"></li> 
+      <li>
+        <a href={{pathFor 'newCourse'}}>Create a new course</a>
+      </li>
+    </ul>
+</li>
+<li class="{{ activeIfTemplateIs 'default_app' }}"> 
+  <a href="{{pathFor 'default_app'}}">Default app</a>
+</li>
+
+</template>

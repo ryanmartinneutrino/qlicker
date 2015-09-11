@@ -5,12 +5,30 @@ Router.configure({
 Router.route('/',{
   template: 'default_app'
 });
-Router.route('/register');
-Router.route('/login');
+
+Router.route('/default_app',{
+  template: 'default_app'
+});
+
+Router.route('/register',{
+  template:'register'
+});
+
+Router.route('/login',{
+  template:'login'
+});
+
+Router.route('/logout',{
+  onBeforeAction: function(){
+    Meteor.logout();
+    Router.go('/login');
+  }
+
+ });
 
 
 Router.route('/newCourse',{
-
+  template:'newCourse',
   onBeforeAction: function(){
     var currentUser = Meteor.userId();
     if(currentUser){
