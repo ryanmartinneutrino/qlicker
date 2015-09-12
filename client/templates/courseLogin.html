@@ -10,7 +10,7 @@
             <div class="form-group">
               <label for="selectCourseLogin">Choose course to login:</label>
 	      <select class="form-control selectCourseLogin" id="selectCourseLogin">
-              <option > Choose course</option>
+              <option selected="selected" value=""> Choose course</option>
               {{#each availableCourses}}
                 <option value="{{_id}}" >{{name}} ({{semester}} {{year}})</option>
               {{/each}}
@@ -20,7 +20,7 @@
             <div class="form-group">
               <label for="selectCourseEnroll">Choose course to enroll:</label>
               <select class="form-control selectCourseEnroll" id="selectCourseEnroll">
-              <option > Choose course</option>
+              <option selected="selected" value=""> Choose course</option>
               {{#each availableCoursesAll}}
                 <option value="{{_id}}" >{{name}} ({{semester}} {{year}})</option>
               {{/each}}

@@ -1,5 +1,5 @@
 Template.courseLogin.onCreated(function(){
- Session.setPersistent("currentCourseEnroll","");
+ Session.set("currentCourseEnroll","");
 });
 
 Template.courseLogin.helpers({
@@ -41,12 +41,16 @@ Template.courseLogin.events({
   "change .selectCourseLogin":function(event){
     event.preventDefault();
     Session.setPersistent("currentCourse",$('[id=selectCourseLogin]').val());
+    Session.set("currentCourseEnroll","");
   },
 
   "change .selectCourseEnroll":function(event){
     event.preventDefault();
     var course=Courses.findOne({_id:$('[id=selectCourseEnroll]').val()});
     if(course.enrollKey==="" || course.enrollKey===undefined){
+      Courses.update(course._id,{
+        $push: {enrolledUserIds:Meteor.userId()}
+      });
       Session.setPersistent("currentCourse",course._id);
       Session.set("currentCourseEnroll","");
     }
