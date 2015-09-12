@@ -1,11 +1,18 @@
 Template.newCourse.onRendered(function(){
   var validator =  $('.newCourse').validate({
     submitHandler:  function(event){
-     // event.preventDefault();
       var name = $('[name=name]').val();
       var semester = $('[name=semester]').val();
       var year = $('[name=year]').val();
-      var course={name:name,semester:semester,year:year}
+      var enrollKey = $('[name=enrollKey]').val();
+      var createdBy_id = Meteor.userId();
+      var course={
+        name:name,
+        semester:semester,
+        year:year,
+        createdBy_id:createdBy_id,
+        enrollKey:enrollKey  
+      }
       Courses.insert(course,function(error){
           if(error){
             validator.showErrors({

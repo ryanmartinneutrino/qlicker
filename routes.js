@@ -26,6 +26,14 @@ Router.route('/logout',{
 
  });
 
+Router.route('/courseLogout',{
+  onBeforeAction: function(){
+    Session.set("currentCourse","");
+    Router.go('/courseLogin');
+  }
+
+ });
+
 
 Router.route('/newCourse',{
   template:'newCourse',
@@ -39,4 +47,31 @@ Router.route('/newCourse',{
   }
 
 });
+
+
+Router.route('/newQuestion',{
+  template:'newQuestion',
+  onBeforeAction: function(){
+    var currentUser = Meteor.userId();
+    if(currentUser){
+      this.next();
+    } else {
+      Router.go('/login');
+    }
+  }
+});
+
+Router.route('/courseLogin',{
+  template:'courseLogin',
+  onBeforeAction: function(){
+    var currentUser = Meteor.userId();
+    if(currentUser){
+      this.next();
+    } else {
+      Router.go('/login');
+    }
+  }
+});
+
+
 

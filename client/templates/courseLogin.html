@@ -1,0 +1,40 @@
+<template name="courseLogin">
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+        <div class="col-sm-6 col-sm-offset-3 column">
+        {{#if loggedIntoCourse}}
+          <h4>Logged into: {{currentCourseInfo}}<a href="/courseLogout"> Logout</a></h4>
+        {{/if}}
+          <form class="courseLogin" role="form">
+            <div class="form-group">
+              <label for="selectCourseLogin">Choose course to login:</label>
+	      <select class="form-control selectCourseLogin" id="selectCourseLogin">
+              <option > Choose course</option>
+              {{#each availableCourses}}
+                <option value="{{_id}}" >{{name}} ({{semester}} {{year}})</option>
+              {{/each}}
+              </select>
+	    </div>
+
+            <div class="form-group">
+              <label for="selectCourseEnroll">Choose course to enroll:</label>
+              <select class="form-control selectCourseEnroll" id="selectCourseEnroll">
+              <option > Choose course</option>
+              {{#each availableCoursesAll}}
+                <option value="{{_id}}" >{{name}} ({{semester}} {{year}})</option>
+              {{/each}}
+              </select>
+              {{#if needToEnroll}}
+                <label for="enrollKey">This course requires a key in order to be enrolled:</label>
+                <input type="text" name="enrollKey" class="form-control input" placeholder="Enrollment key" value="" required>    
+                <button class="btn btn-default enrollButton">Enroll</button>            
+              {{/if}}
+            </div>
+          </form>
+        </div>
+    </div>
+  </div>
+</div>
+
+</template>

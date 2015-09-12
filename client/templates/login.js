@@ -1,3 +1,7 @@
+Template.login.onCreated(function(){
+  Session.setPersistent("currentCourse","");
+});
+
 Template.login.onRendered(function(){
   var validator =  $('.login').validate({
     submitHandler:  function(event){
@@ -11,7 +15,9 @@ Template.login.onRendered(function(){
               email:error.reason
             });
           }
-          else Router.go("/");
+          else{
+            Router.go("/");
+          }
         }
       );
    } 
@@ -19,10 +25,8 @@ Template.login.onRendered(function(){
 });
 
 Template.login.events({
-  "submit form": function(event){
-    event.preventDefault();
-    //rest of submit is handled by the submitHandler of the validator
-  }
+"submit form":function(event){
+  event.preventDefault();
 
-
+}
 });
