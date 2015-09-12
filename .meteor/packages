@@ -12,3 +12,4 @@ accounts-ui
 iron:router
 twbs:bootstrap
 themeteorchef:jquery-validation
+u2622:persistent-session

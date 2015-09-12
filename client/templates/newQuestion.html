@@ -7,12 +7,12 @@
           <form class="newCourse" role="form">
             <div class="form-group">
               <label class="checkbox-inline">
-              <input type="checkbox" name="isPublic" value="">Public
+              <input type="checkbox" name="isPublic" value="">Make public
               </label>
             </div>
 
             <div class="form-group">
-              <label for="selectCourse">Choose course</label>
+              <label for="selectCourse">Choose course (this will change which course you're logged into)</label>
               <select class="form-control selectCourse" id="selectCourse">
               <option value=""> Choose course</option>
               {{#each availableCourses}}
@@ -23,11 +23,35 @@
 
 
             <div class="form-group">
-	      <input type="text" name="qtitle" class="form-control" placeholder="Question" value="" required>
+	      <input type="text" name="qtitle" class="form-control" placeholder="Question" value="">
 	    </div>
 
+            <div class="form-group">
+               <label for="imageFile">
+               <span class="glyphicon glyphicon-picture"></span></label>
+               <div class="upload-drop-zone" id="drop-zone">
+                 Drag and drop an image
+               </div>
+            </div>
+
+           {{#each answers}}
+             {{#if moreThanOneAnswer}}
+             <label for="{{id}}">{{letter}}.</label>
+             {{/if}}
+             <div class="form-group">
+                <input type="text" name="{{id}}" id="{{id}}" class="form-control" placeholder="Answer" value="">
+             </div>
+           {{/each}}
+
            <div class="form-group">
-              <input type="text" name="ans" class="form-control" placeholder="Answer" value="" required>
+              <button class="btn btn-default addAnswerButton" >
+               <span class="glyphicon glyphicon-plus"></span>
+              </button>
+              {{#if moreThanOneAnswer}}
+              <button class="btn btn-default removeAnswerButton" >
+               <span class="glyphicon glyphicon-minus"></span>
+              </button>
+              {{/if}}
             </div>
 
           <button type="submit" class="btn btn-primary btn-block">Create!</button>
