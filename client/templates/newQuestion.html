@@ -7,7 +7,7 @@
           <form class="newCourse" role="form">
             <div class="form-group">
               <label class="checkbox-inline">
-              <input type="checkbox" name="isPublic" value="">Make public
+              <input type="checkbox" name="isPublic" value="" {{checkedIfLoggedIntoCourse}}>Make public
               </label>
             </div>
 
@@ -35,11 +35,12 @@
             </div>
 
            {{#each answers}}
-             {{#if moreThanOneAnswer}}
-             <label for="{{id}}">{{letter}}.</label>
-             {{/if}}
              <div class="form-group">
-                <input type="text" name="{{id}}" id="{{id}}" class="form-control" placeholder="Answer" value="">
+             {{#if moreThanOneAnswer}}
+             <label >{{letter}}.</label>
+             <label class="checkbox-inline"><input type="checkbox" name={{ansid}}_correct value="">correct answer</label>
+             {{/if}}
+                <input type="text" name="{{ansid}}" id="{{ansid}}" class="form-control" placeholder="Answer" value="">
              </div>
            {{/each}}
 

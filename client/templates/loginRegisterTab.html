@@ -3,12 +3,10 @@
   <div class="row">
     <div class="col-sm-12">
         <div class="col-sm-6 col-sm-offset-3 column">
-          {{#unless currentUser}}
           <ul class="nav nav-tabs">
             <li class="{{#if loginTabActive}}active{{/if}}"><a href="/login">Login </a></li>
             <li class="{{#unless loginTabActive}}active{{/unless}}"><a href="/register">Register</a> </li>
           </ul>
-         {{/unless}}
         </div>
     </div>
   </div>

@@ -15,7 +15,7 @@ Template.courseLogin.helpers({
     if( currentCourse==="" || currentCourse === undefined)return "Not logged into any course";
     else{
      var course=Courses.findOne({_id:currentCourse});
-     return course.name+" ("+course.semester+" "+course.year+")";
+     if(course) return course.name+" ("+course.semester+" "+course.year+")";
     }
   }, 
 
@@ -27,7 +27,15 @@ Template.courseLogin.helpers({
 
   availableCourses:function(){
     var currentUser=Meteor.userId();
-    return Courses.find({$or:[{createdBy_id:currentUser},{enrolledUserIds:currentUser}]});
+    var user=Users.findOne({_id:currentUser});
+    if(user){
+      var createdCourseIds=user.createdCourse_Ids;
+      var enrolledCourseIds=user.enrolledCourse_Ids;
+      return Courses.find({$or:[
+        {_id: {$in :createdCourseIds}},
+        {_id: {$in :enrolledCourseIds}}
+        ]});
+    }
   },
 
   availableCoursesAll:function(){
@@ -51,6 +59,7 @@ Template.courseLogin.events({
       Courses.update(course._id,{
         $push: {enrolledUserIds:Meteor.userId()}
       });
+      Users.update({_id:Meteor.user()._id}, { $push: {enrolledCourse_Ids:course._id} });
       Session.setPersistent("currentCourse",course._id);
       Session.set("currentCourseEnroll","");
     }
@@ -67,6 +76,7 @@ Template.courseLogin.events({
       Courses.update(course._id,{
         $push: {enrolledUserIds:Meteor.userId()}
       });
+      Users.update({_id:Meteor.user()._id}, { $push: {enrolledCourse_Ids:course._id} });
       Session.setPeristent("currentCourse",course._id);
       Session.set("currentCourseEnroll","");
     }

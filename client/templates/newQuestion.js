@@ -8,7 +8,7 @@ Template.newQuestion.helpers({
   loggedIntoCourse: function(){
     var currentCourse=Session.get("currentCourse");
     if(currentCourse==="" || currentCourse=== undefined)return false;
-    return true;
+    else return true;
   },
 
   currentCourseInfo:function(){
@@ -26,6 +26,12 @@ Template.newQuestion.helpers({
     else return "";
   },
 
+  checkedIfLoggedIntoCourse:function(){
+    var currentCourse=Session.get("currentCourse");
+    if(currentCourse==="" || currentCourse=== undefined)return "checked";
+    else return "";
+  },
+
   availableCourses:function(){
     var currentUser=Meteor.userId();
     return Courses.find({$or:[{createdBy_id:currentUser},{enrolledUserIds:currentUser}]});
@@ -40,7 +46,7 @@ Template.newQuestion.helpers({
     var nAnswers=Session.get("nAnswers");
     var alphabet=["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
     for (var i=0;i<nAnswers;i++){
-      answerArray.push({id:"ans_"+i,letter:alphabet[i]});
+      answerArray.push({ansid:"ans_"+i,letter:alphabet[i]});
     }
     return answerArray;  
   }

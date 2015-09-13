@@ -13,15 +13,20 @@ Template.newCourse.onRendered(function(){
         createdBy_id:createdBy_id,
         enrollKey:enrollKey  
       }
-      Courses.insert(course,function(error){
+      var newCourseId=Courses.insert(course,function(error){
           if(error){
             validator.showErrors({
               name:error.reason
             });
           }
-          else Router.go("/");
+          else{
+            Users.update({_id:Meteor.userId()},
+              {$push: {createdCourse_Ids:newCourseId}});
+            Router.go("/courseLogin");
+          }
         }
       );
+     Session.setPersistent("currentCourse",newCourseId);
    } 
   });
 });

@@ -1,7 +1,6 @@
 Template.register.onRendered(function(){
   var validator =  $('.register').validate({
     submitHandler:  function(event){
-      event.preventDefault();
       var email = $('[name=email]').val();
       var password = $('[name=password]').val();
       var passwordconf = $('[name=password]').val();
@@ -14,17 +13,42 @@ Template.register.onRendered(function(){
       Accounts.createUser({
          email: email,
          password: password,
-         firstName: firstName,
-        lastName: lastName,
         },function(error){
           if(error){
             validator.showErrors({
               email:error.reason
             });
           }
-          else Router.go("/");
-        }
-      );
+
+         else{
+           Meteor.loginWithPassword(email,password);
+           var metId=Meteor.userId();
+           Users.insert({
+             _id:metId,
+             email: email,
+             firstName: firstName,
+             lastName: lastName,
+             institution: institution,
+             enrolledCourse_Ids:[],
+             createdCourse_Ids:[]
+           });
+           Router.go("/");
+         }//end else 
+      });
+      
+      /*
+      var metId=Meteor.userId();   
+      console.log("logged in ID "+metId);
+      Users.insert({
+        _id:metId,
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+        institution: institution,
+        enrolledCourse_Ids:[],
+        createdCourse_Ids:[]
+      });
+      Router.go("/");*/
    } 
   });
 });
