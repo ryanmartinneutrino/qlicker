@@ -4,7 +4,7 @@
     <div class="col-sm-12">
         <div class="col-sm-6 col-sm-offset-3 column">
           <h4> Create a new question:</h4>
-          <form class="newCourse" role="form">
+          <form class="newQuestion" role="form">
             <div class="form-group">
               <label class="checkbox-inline">
               <input type="checkbox" name="isPublic" value="" {{checkedIfLoggedIntoCourse}}>Make public
@@ -13,7 +13,7 @@
 
             <div class="form-group">
               <label for="selectCourse">Choose course (this will change which course you're logged into)</label>
-              <select class="form-control selectCourse" id="selectCourse">
+              <select class="form-control selectCourse" name="selectCourse" id="selectCourse">
               <option value=""> Choose course</option>
               {{#each availableCourses}}
                 <option value="{{_id}}" {{selectIfLoggedIn _id}}>{{name}} ({{semester}} {{year}})</option>

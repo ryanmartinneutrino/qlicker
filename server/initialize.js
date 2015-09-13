@@ -1,5 +1,5 @@
 Meteor.startup(function(){
-
+/*
   //Add some data into the databases
   if(Institutions.find().count()=== 0){
     Institutions.insert({name:"Queen's"});
@@ -41,7 +41,7 @@ Meteor.startup(function(){
         {ans:"A comedian", correct:true},
         {ans:"A baby", correct:false} 
       ],
-      correctAnswers:[{correctAns:answers[0]}],      
+      //correctAnswers:[{correctAns:answers[0]}],      
       sessionUsed_ids:[{session_id:"xxxx"},{session_id:"xxxx"} ],
       createdBy_id:"xxxx"
     };
@@ -71,6 +71,6 @@ Meteor.startup(function(){
   }
 
 
-
+*/
 
 });

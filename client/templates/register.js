@@ -35,20 +35,6 @@ Template.register.onRendered(function(){
            Router.go("/");
          }//end else 
       });
-      
-      /*
-      var metId=Meteor.userId();   
-      console.log("logged in ID "+metId);
-      Users.insert({
-        _id:metId,
-        email: email,
-        firstName: firstName,
-        lastName: lastName,
-        institution: institution,
-        enrolledCourse_Ids:[],
-        createdCourse_Ids:[]
-      });
-      Router.go("/");*/
    } 
   });
 });

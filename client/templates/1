@@ -1,35 +1,9 @@
 
-Template.newQuestion.onRendered(function(){
-  var validator =  $('.newQuestion').validate({
+Template.register.onRendered(function(){
+  var validator =  $('.newQuestionForm').validate({
     submitHandler:  function(event){
       var qtitle = $('[name=qtitle]').val();
-      var isPublic = $('[name=isPublic]').is(":checked");
-      var nAnswers=Session.get("nAnswers");
-      var course_Id = $('[name=selectCourse]').val();
-      var answers = [];
-      for(var i=0;i<nAnswers;i++){
-        ansId="ans_"+i;
-        if(nAnswers<2){
-          answers.push({ans: $("[name="+ansId+"]").val(), votes:0});
-        }
-        else{
-          var isCorrect = $("[name="+ansId+"_correct]").is(":checked");
-          answers.push({ans: $("[name="+ansId+"]").val(), isCorrect:isCorrect, votes:0});
-        }
-      }
-      var question = {
-        qtitle:qtitle,
-        isPublic:isPublic,
-        course_Id:course_Id,
-        nAnswers:nAnswers,
-        answers:answers,
-        createdBy_Id:Meteor.userId()        
-      };
-      var qid=Questions.insert(question);
-      Courses.update(course_Id,{
-        $push: {questions:qid}
-      });
-      Router.go('/');
+      var isPublic = $('[name=isPublic]').val(); 
    }
   });//end of validate()
 });
@@ -122,7 +96,7 @@ Template.newQuestion.events({
     Session.set("nAnswers",nAnswers);
   },
 
-  "submit .newQuestion":function(event){
+  "submit .newQuestionForm":function(event){
     event.preventDefault();
 
   }

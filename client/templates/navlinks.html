@@ -3,8 +3,13 @@
 {{#if currentUser}}
   <ul class="nav navbar-nav">
     <li class="{{ activeIfTemplateIs 'newCourse' }}">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown">Courses<b class="caret"></b></a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown">Course<b class="caret"></b></a>
         <ul class="dropdown-menu multi-level">
+        {{#if loggedIntoCourse}}
+          <li>
+            <a href="/courseLogout">Logout of {{currentCourseInfo}}</a>
+          </li>
+        {{/if}}
           <li>
             <a href={{pathFor 'courseLogin'}}>Login/enroll into a  course</a>
           </li>
