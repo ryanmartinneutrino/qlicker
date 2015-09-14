@@ -2,6 +2,12 @@
 Template.sessionList.helpers({
   sessions:function(){
     return Sessions.find({courseId:this._id});
+  },
+
+  ifOwner:function(){
+    createdById=this.createdById;
+    if(Meteor.userId()==createdById)return true;
+    else return false;
   }
 
 });

@@ -90,7 +90,7 @@ Router.route('/courseLogin',{
   }
 });
 
-Router.route('course/:_id',{
+Router.route('/course/:_id',{
   template:'course',
   onBeforeAction: function(){
     if(Session.get("currentCourse"))this.next();
@@ -102,6 +102,32 @@ Router.route('course/:_id',{
   }
 
 });
+
+Router.route('/question/:_id',{
+  template:'question',
+  onBeforeAction: function(){
+    this.next();
+  },
+  data: function(){
+    var qid=this.params._id;
+    return Questions.findOne({_id:qid});
+  }
+
+});
+
+
+Router.route('/course/:courseId/session/:sessionId',{
+  template:'session',
+  onBeforeAction: function(){
+    this.next();
+  },
+  data: function(){
+    var sid=this.params.sessionId;
+    return Sessions.findOne({_id:sid});
+  }
+
+});
+
 
 Router.route('/course/:courseId/session/edit/:sessionId',{
   template:'sessionEdit',
@@ -120,7 +146,7 @@ Router.route('/course/:courseId/session/delete/:sessionId',{
   template:'course',
   onBeforeAction:function(){
     Sessions.remove({_id:this.params.sessionId});
-    Courses.update({_id:this.params.courseId},{$pull : {sessionIds:this.params.sessionId}} );
+    //Courses.update({_id:this.params.courseId},{$pull : {sessionIds:this.params.sessionId}} );
     this.next();
   },
   data: function(){
@@ -131,7 +157,7 @@ Router.route('/course/:courseId/session/delete/:sessionId',{
 });
 
 
-Router.route('/course/:courseId/session/:sessionId/add/question/questionId',{
+Router.route('/course/:courseId/session/:sessionId/add/question/:questionId',{
   template:'sessionEdit',
   onBeforeAction:function(){
     Sessions.update({_id:this.params.sessionId},{$push :{questionIds:this.params.questionId}});
@@ -147,6 +173,21 @@ Router.route('/course/:courseId/session/:sessionId/add/question/questionId',{
 
 });
 
+Router.route('/course/:courseId/session/:sessionId/remove/question/:questionId',{
+  template:'sessionEdit',
+  onBeforeAction:function(){
+    Sessions.update({_id:this.params.sessionId},{$pull :{questionIds:this.params.questionId}});
+    this.next();
+  },
+  data: function(){
+    var courseId=this.params.courseId;
+    var sessionId=this.params.sessionId;
+
+    return {course:Courses.findOne({_id:courseId}),
+            session:Sessions.findOne({_id:sessionId})};
+  }
+
+});
 
 
 

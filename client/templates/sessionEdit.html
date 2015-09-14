@@ -6,8 +6,8 @@
 <div class="col-sm-4 column">
 <h4>Choose a question to add to session</h4>
 {{#each questionsFromCourse}}
-  <button type="button" class="btn btn-default btn-block addQuestionToSessionButton " value="{{_id}}"> {{qtitle}}</button>
-  <a href="/course/{{courseId}}/session/{{sessionId}}/add/question/{{_id}}">{{qtitle}}</a>
+  <a href="/question/{{_id}}" >View</a>
+  <a href="/course/{{courseId ..}}/session/{{sessionId ..}}/add/question/{{_id}}" class="btn btn-default btn-block">{{qtitle}}</a>
 {{/each}}
 </div>
 
@@ -16,8 +16,9 @@
 <div class="col-sm-8 column">
 <h4>Questions in session</h4>
 {{#each questionsInSession}}
-  <button type="button" class="btn btn-default btn-block " value="{{_id}}">
-  {{qtitle}}</button>
+  <a href="/course/{{courseId ..}}/session/{{sessionId ..}}/remove/question/{{_id}}">
+    remove</a>
+  <a href="/question/{{_id}}" class="btn btn-default btn-block " >{{qtitle}}</a>
 {{/each}}
 </div>
 
