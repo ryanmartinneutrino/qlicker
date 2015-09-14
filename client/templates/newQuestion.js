@@ -5,7 +5,7 @@ Template.newQuestion.onRendered(function(){
       var qtitle = $('[name=qtitle]').val();
       var isPublic = $('[name=isPublic]').is(":checked");
       var nAnswers=Session.get("nAnswers");
-      var course_Id = $('[name=selectCourse]').val();
+      var courseId = $('[name=selectCourse]').val();
       var answers = [];
       for(var i=0;i<nAnswers;i++){
         ansId="ans_"+i;
@@ -20,14 +20,14 @@ Template.newQuestion.onRendered(function(){
       var question = {
         qtitle:qtitle,
         isPublic:isPublic,
-        course_Id:course_Id,
+        courseIds:[courseId],
         nAnswers:nAnswers,
         answers:answers,
-        createdBy_Id:Meteor.userId()        
+        createdById:Meteor.userId()        
       };
       var qid=Questions.insert(question);
-      Courses.update(course_Id,{
-        $push: {questions:qid}
+      Courses.update(courseId,{
+        $push: {questionIds:qid}
       });
       Router.go('/');
    }
@@ -71,8 +71,8 @@ Template.newQuestion.helpers({
     var currentUser=Meteor.userId();
     var user=Users.findOne({_id:currentUser});
     if(user){
-      var createdCourseIds=user.createdCourse_Ids;
-      var enrolledCourseIds=user.enrolledCourse_Ids;
+      var createdCourseIds=user.createdCourseIds;
+      var enrolledCourseIds=user.enrolledCourseIds;
       return Courses.find({$or:[
         {_id: {$in :createdCourseIds}},
         {_id: {$in :enrolledCourseIds}}

@@ -3,11 +3,28 @@ Router.configure({
 });
 
 Router.route('/',{
-  template: 'default_app'
+  template: 'default_app',
+  onBeforeAction: function(){
+    var currentUser = Meteor.userId();
+    if(currentUser){
+      this.next();
+    } else {
+      Router.go('/login');
+    }
+  }
 });
 
 Router.route('/default_app',{
-  template: 'default_app'
+  template: 'default_app',
+  onBeforeAction: function(){
+    var currentUser = Meteor.userId();
+    if(currentUser){
+      this.next();
+    } else {
+      Router.go('/login');
+    }
+  }
+
 });
 
 Router.route('/register',{
@@ -72,6 +89,66 @@ Router.route('/courseLogin',{
     }
   }
 });
+
+Router.route('course/:_id',{
+  template:'course',
+  onBeforeAction: function(){
+    if(Session.get("currentCourse"))this.next();
+    else Router.go('/courseLogin');
+  },
+  data: function(){
+    var currentCourse=this.params._id;
+    return Courses.findOne({_id:currentCourse});
+  }
+
+});
+
+Router.route('/course/:courseId/session/edit/:sessionId',{
+  template:'sessionEdit',
+  data: function(){
+    var courseId=this.params.courseId;
+    var sessionId=this.params.sessionId;
+
+    return {course:Courses.findOne({_id:courseId}),
+            session:Sessions.findOne({_id:sessionId})};
+
+  }
+
+});
+
+Router.route('/course/:courseId/session/delete/:sessionId',{
+  template:'course',
+  onBeforeAction:function(){
+    Sessions.remove({_id:this.params.sessionId});
+    Courses.update({_id:this.params.courseId},{$pull : {sessionIds:this.params.sessionId}} );
+    this.next();
+  },
+  data: function(){
+    var currentCourse=this.params.courseId;
+    return Courses.findOne({_id:currentCourse});
+  }
+  
+});
+
+
+Router.route('/course/:courseId/session/:sessionId/add/question/questionId',{
+  template:'sessionEdit',
+  onBeforeAction:function(){
+    Sessions.update({_id:this.params.sessionId},{$push :{questionIds:this.params.questionId}});
+    this.next();
+  },
+  data: function(){
+    var courseId=this.params.courseId;
+    var sessionId=this.params.sessionId;
+
+    return {course:Courses.findOne({_id:courseId}),
+            session:Sessions.findOne({_id:sessionId})};
+  }
+
+});
+
+
+
 
 
 

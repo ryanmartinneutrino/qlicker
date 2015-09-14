@@ -29,8 +29,8 @@ Template.register.onRendered(function(){
              firstName: firstName,
              lastName: lastName,
              institution: institution,
-             enrolledCourse_Ids:[],
-             createdCourse_Ids:[]
+             enrolledCourseIds:[],
+             createdCourseIds:[]
            });
            Router.go("/");
          }//end else 

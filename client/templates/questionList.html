@@ -1,8 +1,8 @@
 <template name="questionList">
 <div class="container-fluid">
 <div class="row">
-  {{#each questions}}
-    {{>question}}
+  {{#each questionsFromCourse}}
+    {{>questionNoAnswer}}
     <br>
   {{/each}}
 </div>

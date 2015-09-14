@@ -20,6 +20,12 @@ Template.navlinks.helpers({
      if(course) return course.name+" ("+course.semester+" "+course.year+")";
     }
   },
+  currentCourseId:function(){
+    var currentCourse=Session.get("currentCourse");
+    if( currentCourse==="" || currentCourse === undefined)return "";
+    else return currentCourse;
+  },
+
   loggedIntoCourse: function(){
     var currentCourse=Session.get("currentCourse");
     if(currentCourse==="" || currentCourse=== undefined)return false;

@@ -29,8 +29,8 @@ Template.courseLogin.helpers({
     var currentUser=Meteor.userId();
     var user=Users.findOne({_id:currentUser});
     if(user){
-      var createdCourseIds=user.createdCourse_Ids;
-      var enrolledCourseIds=user.enrolledCourse_Ids;
+      var createdCourseIds=user.createdCourseIds;
+      var enrolledCourseIds=user.enrolledCourseIds;
       return Courses.find({$or:[
         {_id: {$in :createdCourseIds}},
         {_id: {$in :enrolledCourseIds}}
@@ -40,7 +40,7 @@ Template.courseLogin.helpers({
 
   availableCoursesAll:function(){
     var currentUser=Meteor.userId();
-    return Courses.find({$and:[{createdBy_id:{$ne:currentUser}},{enrolledUserIds:{$ne:currentUser}} ]});
+    return Courses.find({$and:[{createdById:{$ne:currentUser}},{enrolledUserIds:{$ne:currentUser}} ]});
   },
 
 });
@@ -48,7 +48,9 @@ Template.courseLogin.helpers({
 Template.courseLogin.events({
   "change .selectCourseLogin":function(event){
     event.preventDefault();
-    Session.setPersistent("currentCourse",$('[id=selectCourseLogin]').val());
+    var courseId=$('[id=selectCourseLogin]').val();
+    Session.setPersistent("currentCourse",courseId);
+    Router.go('/course/'+courseId);
     Session.set("currentCourseEnroll","");
   },
 
@@ -59,7 +61,7 @@ Template.courseLogin.events({
       Courses.update(course._id,{
         $push: {enrolledUserIds:Meteor.userId()}
       });
-      Users.update({_id:Meteor.user()._id}, { $push: {enrolledCourse_Ids:course._id} });
+      Users.update({_id:Meteor.user()._id}, { $push: {enrolledCourseIds:course._id} });
       Session.setPersistent("currentCourse",course._id);
       Session.set("currentCourseEnroll","");
     }
@@ -76,7 +78,7 @@ Template.courseLogin.events({
       Courses.update(course._id,{
         $push: {enrolledUserIds:Meteor.userId()}
       });
-      Users.update({_id:Meteor.user()._id}, { $push: {enrolledCourse_Ids:course._id} });
+      Users.update({_id:Meteor.user()._id}, { $push: {enrolledCourseIds:course._id} });
       Session.setPeristent("currentCourse",course._id);
       Session.set("currentCourseEnroll","");
     }

@@ -1,0 +1,27 @@
+<template name="sessionEdit">
+<h1>Course: {{course.name}} session: {{session.sessionNumber}} </h1>
+<div class="container-fluid">
+<div class="row">
+
+<div class="col-sm-4 column">
+<h4>Choose a question to add to session</h4>
+{{#each questionsFromCourse}}
+  <button type="button" class="btn btn-default btn-block addQuestionToSessionButton " value="{{_id}}"> {{qtitle}}</button>
+  <a href="/course/{{courseId}}/session/{{sessionId}}/add/question/{{_id}}">{{qtitle}}</a>
+{{/each}}
+</div>
+
+
+
+<div class="col-sm-8 column">
+<h4>Questions in session</h4>
+{{#each questionsInSession}}
+  <button type="button" class="btn btn-default btn-block " value="{{_id}}">
+  {{qtitle}}</button>
+{{/each}}
+</div>
+
+
+</div>
+</div>
+</template>

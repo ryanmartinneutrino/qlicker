@@ -7,11 +7,15 @@
         <ul class="dropdown-menu multi-level">
         {{#if loggedIntoCourse}}
           <li>
+              <a href="/course/{{currentCourseId}}">{{currentCourseInfo}}</a>
+          </li>
+
+          <li>
             <a href="/courseLogout">Logout of {{currentCourseInfo}}</a>
           </li>
         {{/if}}
           <li>
-            <a href={{pathFor 'courseLogin'}}>Login/enroll into a  course</a>
+            <a href={{pathFor 'courseLogin'}}>Login or enroll into a  course</a>
           </li>
           <li class="divider"></li> 
           <li>

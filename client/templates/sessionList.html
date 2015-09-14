@@ -1,0 +1,13 @@
+<template name="sessionList">
+
+  {{#each sessions}}
+    <a href="/course/{{courseId}}/session/edit/{{_id}}"> Session {{sessionNumber}}</a>
+    <a href="/course/{{courseId}}/session/delete/{{_id}}" ><span class="glyphicon glyphicon-trash"></span>
+    </a>
+    <br>
+  {{/each}}
+  <button class="btn btn-default btn-block newSessionButton">
+    <span class="glyphicon glyphicon-plus"></span> New session
+  </button>
+
+</template>

@@ -1,9 +1,18 @@
 <template name="question">
-  <div class="btn-group-vertical-justified">
-    <button type="button" class="btn btn-default"> <button class="delete">&times;</button>  {{qtitle}}</button>
+
+<div class="col-sm-6 col-sm-offset-3 column">
+<button type="button" class="btn btn-default "> <button class="delete">&times;</button>  {{qtitle}}</button>
     {{#each answers}}
-      <button type="button" class="btn btn-primary answer">{{ans}}</button>
+      <button type="button" class="btn btn-primary btn-block">{{ans}}</button>
     {{/each}}
   </div>
 </template>
+
+<template name="questionNoAnswer">
+
+<div class="col-sm-6 col-sm-offset-3 column">
+  <button type="button" class="btn btn-default "> <button class="delete">&times;</button>  {{qtitle}}</button>
+</div>
+</template>
+
 
