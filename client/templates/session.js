@@ -3,8 +3,10 @@ Template.session.helpers({
   questionsInSession:function(){
     var ids=[];
     ids=this.questionIds;
-    questions=Questions.find({_id:{$in :ids}});
-    return questions;
+    if(ids){
+      questions=Questions.find({_id:{$in :ids}});
+      return questions;
+    }
   },
 
   ifOwner:function(){

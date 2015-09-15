@@ -3,7 +3,7 @@ Router.configure({
 });
 
 Router.route('/',{
-  template: 'default_app',
+  template: 'courseLogin',
   onBeforeAction: function(){
     var currentUser = Meteor.userId();
     if(currentUser){
@@ -12,19 +12,6 @@ Router.route('/',{
       Router.go('/login');
     }
   }
-});
-
-Router.route('/default_app',{
-  template: 'default_app',
-  onBeforeAction: function(){
-    var currentUser = Meteor.userId();
-    if(currentUser){
-      this.next();
-    } else {
-      Router.go('/login');
-    }
-  }
-
 });
 
 Router.route('/register',{
@@ -127,6 +114,41 @@ Router.route('/course/:courseId/session/:sessionId',{
   }
 
 });
+
+Router.route('/course/:courseId/session/run/:sessionId',{
+  template:'sessionRun',
+  onBeforeAction:function(){
+    var courseId=this.params.courseId;
+    var sessionId=this.params.sessionId;
+    Courses.update({_id:courseId},{$set:{currentSessionId:sessionId}});
+    this.next();
+  },
+  data: function(){
+    var courseId=this.params.courseId;
+    var sessionId=this.params.sessionId;
+
+    return {course:Courses.findOne({_id:courseId}),
+            session:Sessions.findOne({_id:sessionId})};
+
+  }
+
+});
+
+Router.route('/course/:courseId/session/stop/:sessionId',{
+  template:'course',
+  onBeforeAction:function(){
+    var courseId=this.params.courseId;
+    var sessionId=this.params.sessionId;
+    Courses.update({_id:courseId},{$set:{currentSessionId:""}});
+    this.next();
+  },
+  data: function(){
+    var currentCourse=this.params.courseId;
+    return Courses.findOne({_id:currentCourse});
+  }
+
+});
+
 
 
 Router.route('/course/:courseId/session/edit/:sessionId',{

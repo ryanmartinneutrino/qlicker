@@ -8,6 +8,12 @@ Template.sessionList.helpers({
     createdById=this.createdById;
     if(Meteor.userId()==createdById)return true;
     else return false;
+  },
+
+  isCurrentSession:function(){
+    var currentSessionId=Courses.findOne({_id:this.courseId}).currentSessionId;
+    if(currentSessionId==this._id)return true;
+    else return false;
   }
 
 });

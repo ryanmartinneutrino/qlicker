@@ -3,6 +3,10 @@
   {{#each sessions}}
     <a href="/course/{{courseId}}/session/{{_id}}"> Session {{sessionNumber}}</a>
     {{#if ifOwner}}
+      <a href="/course/{{courseId}}/session/run/{{_id}}"><span class="glyphicon glyphicon-play"></span></a>
+      {{#if isCurrentSession}}
+      <a href="/course/{{courseId}}/session/stop/{{_id}}"><span class="glyphicon glyphicon-stop"></span></a>
+      {{/if}}
       <a href="/course/{{courseId}}/session/edit/{{_id}}"><span class="glyphicon glyphicon-pencil"></span></a>
       <a href="/course/{{courseId}}/session/delete/{{_id}}" ><span class="glyphicon glyphicon-trash"></span>
       </a>

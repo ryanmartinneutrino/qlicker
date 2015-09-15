@@ -1,9 +1,9 @@
 <template name="question">
 
 <div class="col-sm-6 col-sm-offset-3 column">
-<button type="button" class="btn btn-default "> <button class="delete">&times;</button>  {{qtitle}}</button>
+<button type="button" class="btn btn-default btn-block"> {{qtitle}}</button>
     {{#each answers}}
-      <button type="button" class="btn btn-primary btn-block">{{ans}}</button>
+      <button type="button" class="btn btn-primary btn-block" data-toggle="button">{{ans}}</button>
     {{/each}}
   </div>
 </template>

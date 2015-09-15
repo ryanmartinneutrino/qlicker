@@ -8,7 +8,7 @@ Template.navlinks.helpers({
   formattedName:function(){
     if(Meteor.user()){
       var user= Users.findOne({_id:Meteor.userId()});
-      return user.firstName +" "+user.lastName;
+      if(user) return user.firstName +" "+user.lastName;
     }
     else return "";
   },
