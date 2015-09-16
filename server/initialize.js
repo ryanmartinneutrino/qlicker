@@ -1,4 +1,12 @@
+
 Meteor.startup(function(){
+Images.allow({
+  'insert': function () {
+    // add custom authentication code here
+    return true;
+  }
+});
+
 /*
   //Add some data into the databases
   if(Institutions.find().count()=== 0){

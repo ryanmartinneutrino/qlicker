@@ -4,4 +4,9 @@ Institutions = new Mongo.Collection("institutions");
 Courses = new Mongo.Collection("courses");
 Sessions = new Mongo.Collection("sessions");
 Quizzes =  new Mongo.Collection("quizzes");
-StudentResults = new Mongo.Collection("studentResults");
+Responses = new Mongo.Collection("responses");
+Images = new FS.Collection("images", {
+  stores: [new FS.Store.FileSystem("images", {path: "/home/rmartin/qlicker/uploads"})]
+});
+
+

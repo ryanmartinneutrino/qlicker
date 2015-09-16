@@ -1,3 +1,28 @@
+Template.newQuestion.rendered = function(){
+
+var arrayOfImageIds = [];
+
+    Dropzone.autoDiscover = false;
+
+    // Adds file uploading and adds the imageID of the file uploaded
+    // to the arrayOfImageIds object.
+
+    var dropzone = new Dropzone("form#dropzone", {
+        accept: function(file, done){
+            Images.insert(file, function(err, fileObj){
+                if(err){
+                  alert("Error");
+                } else {
+                  // gets the ID of the image that was uploaded
+                  var imageId = fileObj._id;
+                  // do something with this image ID, like save it somewhere
+                  arrayOfImageIds.push(imageId);
+                };
+            });
+        }
+    });
+
+}
 
 Template.newQuestion.onRendered(function(){
   var validator =  $('.newQuestion').validate({
@@ -10,11 +35,11 @@ Template.newQuestion.onRendered(function(){
       for(var i=0;i<nAnswers;i++){
         ansId="ans_"+i;
         if(nAnswers<2){
-          answers.push({ans: $("[name="+ansId+"]").val(), votes:0});
+          answers.push({ansId:i,ans: $("[name="+ansId+"]").val(), votes:0});
         }
         else{
           var isCorrect = $("[name="+ansId+"_correct]").is(":checked");
-          answers.push({ans: $("[name="+ansId+"]").val(), isCorrect:isCorrect, votes:0});
+          answers.push({ansId:i,ans: $("[name="+ansId+"]").val(), isCorrect:isCorrect, votes:0});
         }
       }
       var question = {
