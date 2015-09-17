@@ -80,8 +80,19 @@ Router.route('/courseLogin',{
 Router.route('/course/:_id',{
   template:'course',
   onBeforeAction: function(){
-    if(Session.get("currentCourse"))this.next();
-    else Router.go('/courseLogin');
+    //check if user is allowed to login to course:
+    var cid=this.params._id;
+    var uid=Meteor.userId();
+    var user=Users.findOne({_id:uid});
+    var enrolledCourseIds=user.enrolledCourseIds;
+    var createdCourseIds=user.createdCourseIds;
+    if(enrolledCourseIds.indexOf(cid)<0 && createdCourseIds.indexOf(cid)<0){
+      Router.go('/courseLogin');
+    }    
+    else{
+      Session.setPersistent("currentCourse",cid);
+      this.next();
+    }
   },
   data: function(){
     var currentCourse=this.params._id;
@@ -90,6 +101,7 @@ Router.route('/course/:_id',{
 
 });
 
+/*
 Router.route('/question/:_id',{
   template:'question',
   onBeforeAction: function(){
@@ -101,7 +113,7 @@ Router.route('/question/:_id',{
   }
 
 });
-
+*/
 
 Router.route('/course/:courseId/session/:sessionId',{
   template:'session',
@@ -182,7 +194,18 @@ Router.route('/course/:courseId/session/delete/:sessionId',{
 Router.route('/course/:courseId/session/:sessionId/add/question/:questionId',{
   template:'sessionEdit',
   onBeforeAction:function(){
-    Sessions.update({_id:this.params.sessionId},{$push :{questionIds:this.params.questionId}});
+    if(QuestionsInSessions.findOne({_id:this.params.questionId})==undefined){
+      var questionInSession={
+        questionId:this.params.questionId,
+        sessionId:this.params.sessionId,
+        courseId:this.params.courseId,
+        maxSubmits:1,
+        isActive:false,
+        responseIds:[]
+      };
+      QuestionsInSessions.insert(questionInSession);
+      Sessions.update({_id:this.params.sessionId},{$push :{questionIds:this.params.questionId}});
+    }
     this.next();
   },
   data: function(){
@@ -199,6 +222,8 @@ Router.route('/course/:courseId/session/:sessionId/remove/question/:questionId',
   template:'sessionEdit',
   onBeforeAction:function(){
     Sessions.update({_id:this.params.sessionId},{$pull :{questionIds:this.params.questionId}});
+    var qis=QuestionsInSessions.findOne({$and:[{questionId:this.params.questionId},{sessionId:this.params.sessionId}]});
+    QuestionsInSessions.remove(qis._id);
     this.next();
   },
   data: function(){

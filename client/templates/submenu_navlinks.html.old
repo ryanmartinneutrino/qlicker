@@ -15,9 +15,14 @@
           </li>
         
         {{else}}
+          <li class="dropdown-submenu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Login to a course</a>
+            <ul class="dropdown-menu"> 
               {{#each availableCourses}}
-                <li><a href="/course/{{_id}}">{{name}} {{semester}} {{year}}</a></li> 
+                <li><a href="#"> blah</a></li> 
               {{/each}}
+            </ul>
+          </li>
           
 
           <li>

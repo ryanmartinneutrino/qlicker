@@ -1,16 +1,26 @@
-<template name="question">
+<template name="questionInSession">
 
 <div class="col-sm-6 col-sm-offset-3 column">
 <button type="button" class="btn btn-default btn-block"> {{qtitle}}</button>
     {{#each answers}}
-      <button type="button" class="btn btn-primary btn-block answerButton" name={{ansId}} data-toggle="button">{{ans}}</button>
+      <button type="button" class="btn btn-primary btn-block answerButton" name={{ansId}} data-toggle="button">
+       {{ans}}   (Votes: {{votes}})
+      </button>
     {{/each}}
-<button type="button" class="btn btn-success submitQuestionButton">submit</button>
+
+{{#if showSubmit}}
+  <button type="button" class="btn btn-success submitQuestionButton">submit</button>
+{{/if}}
   </div>
 </template>
 
-<template name="questionNoAnswer">
 
+
+
+
+
+
+<template name="questionNoAnswer">
 <div class="col-sm-6 col-sm-offset-3 column">
   <button type="button" class="btn btn-default "> <button class="delete">&times;</button>  {{qtitle}}</button>
 </div>

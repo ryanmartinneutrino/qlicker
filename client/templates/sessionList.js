@@ -29,7 +29,7 @@ Template.sessionList.events({
     var session = {
       courseId:this._id,
       createdById:Meteor.userId(),
-      current:false,
+//      current:false,
       sessionNumber:sessionNumber,
       questionIds:[] 
     }

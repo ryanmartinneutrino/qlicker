@@ -7,18 +7,20 @@ Template.sessionRun.helpers({
     return questions;
   },
  
-  courseId:function(parentData){
-   if(parentData.course)return parentData.course._id;  
-  },
+});
 
-  sessionId:function(parentData){
-   if(parentData.session)return parentData.session._id;
+Template.sessionRun.events({
+  "click .activateQuestionButton":function(){
+    var qis=QuestionsInSessions.findOne({$and:[{questionId:this._id},{sessionId:Template.parentData().session._id}]});
+    console.log("Activating "+qis._id);
+    QuestionsInSessions.update(qis._id,{$set:{isActive:true}});
+
   }
-
+//TODO: Add a button to de-activate a question
+//TODO: Add a button to increase the number of allowed submites
 
 
 });
-
 
 
 

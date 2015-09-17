@@ -25,7 +25,18 @@ Template.navlinks.helpers({
     if( currentCourse==="" || currentCourse === undefined)return "";
     else return currentCourse;
   },
-
+  availableCourses:function(){
+    var currentUser=Meteor.userId();
+    var user=Users.findOne({_id:currentUser});
+    if(user){
+      var createdCourseIds=user.createdCourseIds;
+      var enrolledCourseIds=user.enrolledCourseIds;
+      return Courses.find({$or:[
+        {_id: {$in :createdCourseIds}},
+        {_id: {$in :enrolledCourseIds}}
+        ]});
+    }
+  },
   loggedIntoCourse: function(){
     var currentCourse=Session.get("currentCourse");
     if(currentCourse==="" || currentCourse=== undefined)return false;
