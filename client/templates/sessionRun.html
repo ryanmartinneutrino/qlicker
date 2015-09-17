@@ -17,9 +17,16 @@
 
 {{#each questionsInSession}}
 <div class="btn-group btn-group-justified">
-  <div class="btn-group">
-    <button class="btn btn-default activateQuestionButton">Activate</button>
-  </div>
+  {{#if isActive}}
+    <div class="btn-group">
+      <button class="btn btn-success deactivateQuestionButton">De-activate</button>
+    </div>
+  {{else}}
+    <div class="btn-group">
+      <button class="btn btn-danger activateQuestionButton">Activate</button>
+    </div>
+  {{/if}}
+
 
   <div class="btn-group">
     <a href="/question/{{_id}}" class="btn btn-default btn-block " >{{qtitle}}</a>
