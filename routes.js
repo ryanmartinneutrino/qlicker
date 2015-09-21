@@ -201,6 +201,7 @@ Router.route('/course/:courseId/session/:sessionId/add/question/:questionId',{
         courseId:this.params.courseId,
         maxSubmits:1,
         isActive:false,
+        showVotes:true,
         responseIds:[]
       };
       QuestionsInSessions.insert(questionInSession);

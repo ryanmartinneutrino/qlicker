@@ -9,6 +9,9 @@ Template.questionInSession.onRendered(function(){
 
 });
 
+//TODO check if questionNoSubmit makes sense to be in this file
+
+
 Template.questionInSession.helpers({
   showSubmit:function(){
     //don't show submit button if users has already exceeded maxSubmits for this question in this session
@@ -16,13 +19,31 @@ Template.questionInSession.helpers({
     var sid=Template.parentData()._id;
     var uid=Meteor.userId();
     var questionInSession=QuestionsInSessions.findOne({$and:[{questionId:qid},{sessionId:sid}]});
-    var maxSubmits=questionInSession.maxSubmits;
+    var maxSubmits=1;
+    if(questionInSession)maxSubmits=questionInSession.maxSubmits;
     
     var responseByUser=Responses.findOne({$and:[ {userId:uid}, {questionId:qid}, {sessionId:sid} ]});
     if(responseByUser!==undefined){
       if(responseByUser.responses.length>maxSubmits)return false;      
     }
     return true;
+  },
+  showVotes:function(){
+    var qid= Template.parentData(1)._id;
+    var sid=Template.parentData(2)._id;
+    var qis=QuestionsInSessions.findOne({$and:[{questionId:qid},{sessionId:sid}]});
+//    console.log("show votes: "+qid+" "+sid);
+    if(qis)return qis.showVotes;    
+  },
+  percentVotes:function(){
+    var question=Template.parentData(1);
+    var answers=question.answers;
+    var nAnswers=answers.length;
+    var votes=0;
+    for(var i=0;i<nAnswers;i++){
+      votes+=answers[i].votes;
+    }
+    return 100*this.votes/votes;
   }
 
 
@@ -78,4 +99,19 @@ Template.questionInSession.events({
   }
 
 });
+
+
+Template.questionNoSubmit.helpers({
+  showVotes:function(){
+    var qid= Template.parentData(1)._id;
+    var sid=Template.parentData(2)._id;
+    var qis=QuestionsInSessions.findOne({$and:[{questionId:qid},{sessionId:sid}]});
+//    console.log("show votes: "+qid+" "+sid);
+    if(qis)return qis.showVotes;
+
+  }
+
+
+});
+
 

@@ -6,7 +6,7 @@ Template.session.helpers({
     var sid=this._id;
     //Get the active questions in the session:
     var qis=QuestionsInSessions.find({$and:[{sessionId:sid},{isActive:true}]}).fetch();
-    console.log("qis: "+qis.length);
+//    console.log("qis: "+qis.length);
     var nq=qis.length;
     for(var i=0;i<nq;i++){
       ids.push(qis[i].questionId);

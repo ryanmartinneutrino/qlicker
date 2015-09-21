@@ -4,8 +4,16 @@
 <button type="button" class="btn btn-default btn-block"> {{qtitle}}</button>
     {{#each answers}}
       <button type="button" class="btn btn-primary btn-block answerButton" name={{ansId}} data-toggle="button">
-       {{ans}}   (Votes: {{votes}})
+       {{ans}} 
       </button>
+      {{#if showVotes}}
+        <div class="progress">
+          <div class="progress-bar progress-bar-warning" role="progressbar" style="width: {{percentVotes}}%;">
+          {{votes}}
+          </div>
+        </div>
+      {{/if}}
+      
     {{/each}}
 
 {{#if showSubmit}}
@@ -16,6 +24,17 @@
 
 
 
+<template name="questionNoSubmit">
+
+<div class="col-sm-6 col-sm-offset-3 column">
+<button type="button" class="btn btn-default btn-block"> {{qtitle}}</button>
+    {{#each answers}}
+      <button type="button" class="btn btn-primary btn-block answerButton" name={{ansId}} data-toggle="button">
+       {{ans}} {{#if showVotes}}  (Votes: {{votes}}) {{/if}}
+      </button>
+    {{/each}}
+</div>
+</template>
 
 
 
