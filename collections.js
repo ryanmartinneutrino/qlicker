@@ -9,7 +9,8 @@ QuestionsInSessions = new Mongo.Collection("questionsInSessions");
 Quizzes =  new Mongo.Collection("quizzes");
 Responses = new Mongo.Collection("responses");
 Images = new FS.Collection("images", {
- stores: [new FS.Store.FileSystem("images", {path: "/home/rmartin/qlicker/uploads"})]
+// stores: [new FS.Store.FileSystem("images", {path: "/home/rmartin/qlicker/uploads"})]
+  stores: [new FS.Store.GridFS("myImages")]
 });
 
 

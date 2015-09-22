@@ -1,6 +1,8 @@
 <template name="questionInSession">
-
+<div row>
 <div class="col-sm-6 col-sm-offset-3 column">
+<img class="img-responsive" src="{{fileUrl}}" />
+
 <button type="button" class="btn btn-default btn-block"> {{qtitle}}</button>
     {{#each answers}}
       <button type="button" class="btn btn-primary btn-block answerButton" name={{ansId}} data-toggle="button">
@@ -20,19 +22,21 @@
   <button type="button" class="btn btn-success submitQuestionButton">submit</button>
 {{/if}}
   </div>
+</div>
 </template>
 
 
 
 <template name="questionNoSubmit">
-
-<div class="col-sm-6 col-sm-offset-3 column">
+<div row>
+<div class="col-sm-12 column">
 <button type="button" class="btn btn-default btn-block"> {{qtitle}}</button>
     {{#each answers}}
       <button type="button" class="btn btn-primary btn-block answerButton" name={{ansId}} data-toggle="button">
        {{ans}} {{#if showVotes}}  (Votes: {{votes}}) {{/if}}
       </button>
     {{/each}}
+</div>
 </div>
 </template>
 

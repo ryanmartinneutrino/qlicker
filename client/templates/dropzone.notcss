@@ -1,0 +1,8 @@
+
+.dropzone ,
+.dropzone-previews {
+height: 50px;
+border: dashed 3px;
+min-height: 0px !important;
+} 
+

@@ -24,7 +24,7 @@ Template.questionInSession.helpers({
     
     var responseByUser=Responses.findOne({$and:[ {userId:uid}, {questionId:qid}, {sessionId:sid} ]});
     if(responseByUser!==undefined){
-      if(responseByUser.responses.length>maxSubmits)return false;      
+      if(responseByUser.responses.length>=maxSubmits)return false;      
     }
     return true;
   },

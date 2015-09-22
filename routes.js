@@ -62,7 +62,7 @@ Router.route('/newQuestion',{
     } else {
       Router.go('/login');
     }
-  }
+  }  
 });
 
 Router.route('/courseLogin',{

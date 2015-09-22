@@ -1,13 +1,15 @@
+//TODO: dropzone accept does not set fileURl for the submit button to understand...
+
 Template.newQuestion.rendered = function(){
 
-var arrayOfImageIds = [];
+    var arrayOfImageIds = [];
 
     Dropzone.autoDiscover = false;
-
     // Adds file uploading and adds the imageID of the file uploaded
     // to the arrayOfImageIds object.
 
     var dropzone = new Dropzone("form#dropzone", {
+        dictDefaultMessage:"Click or drag and drop an image",
         accept: function(file, done){
             Images.insert(file, function(err, fileObj){
                 if(err){
@@ -17,6 +19,8 @@ var arrayOfImageIds = [];
                   var imageId = fileObj._id;
                   // do something with this image ID, like save it somewhere
                   arrayOfImageIds.push(imageId);
+                  Session.setPersistent("fileUrl",fileObj.url);
+                  //console.log("fileurl: "+fileObj.url);
                 };
             });
         }
@@ -25,6 +29,8 @@ var arrayOfImageIds = [];
 }
 
 Template.newQuestion.onRendered(function(){
+
+  Session.setPersistent("fileUrl","");
   var validator =  $('.newQuestion').validate({
     submitHandler:  function(event){
       var qtitle = $('[name=qtitle]').val();
@@ -48,7 +54,8 @@ Template.newQuestion.onRendered(function(){
         courseIds:[courseId],
         nAnswers:nAnswers,
         answers:answers,
-        createdById:Meteor.userId()        
+        createdById:Meteor.userId(),
+        fileUrl:Session.get("fileUrl")        
       };
       var qid=Questions.insert(question);
       Courses.update(courseId,{
@@ -64,7 +71,9 @@ Template.newQuestion.onCreated(function(){
 });
 
 Template.newQuestion.helpers({
-
+  image: function(){
+    return Images.find().fetch()[1];
+  },
   loggedIntoCourse: function(){
     var currentCourse=Session.get("currentCourse");
     if(currentCourse==="" || currentCourse=== undefined)return false;

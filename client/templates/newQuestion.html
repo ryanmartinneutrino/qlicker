@@ -6,6 +6,7 @@
           <h4> Create a new question:</h4>
           <form action="/file-upload" class="dropzone" id="dropzone"></form>
 
+
           <form class="newQuestion" role="form">
             <div class="form-group">
               <label class="checkbox-inline">
@@ -23,21 +24,11 @@
               </select>
             </div>
 
-            <div class="form-group">
-              {{ >dropzone url='/users/' maxfiles=1 id='dropZoneDiv' dictDefaultMessage='Drag and drop or click to upload an image' }}
-            </div>
 
             <div class="form-group">
 	      <input type="text" name="qtitle" class="form-control" placeholder="Question" value="">
 	    </div>
 
-            <div class="form-group">
-               <label for="imageFile">
-               <span class="glyphicon glyphicon-picture"></span></label>
-               <div class="upload-drop-zone" id="drop-zone">
-                 Drag and drop an image
-               </div>
-            </div>
 
            {{#each answers}}
              <div class="form-group">
