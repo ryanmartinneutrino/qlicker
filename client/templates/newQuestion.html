@@ -5,7 +5,7 @@
         <div class="col-sm-6 col-sm-offset-3 column">
           <h4> Create a new question:</h4>
           <form action="/file-upload" class="dropzone" id="dropzone"></form>
-
+          File URL: {{fileUrl}}<br>
 
           <form class="newQuestion" role="form">
             <div class="form-group">
@@ -17,7 +17,7 @@
             <div class="form-group">
               <label for="selectCourse">Choose course (this will change which course you're logged into)</label>
               <select class="form-control selectCourse" name="selectCourse" id="selectCourse">
-              <option value=""> Choose course</option>
+              <option value=""> Public question</option>
               {{#each availableCourses}}
                 <option value="{{_id}}" {{selectIfLoggedIn _id}}>{{name}} ({{semester}} {{year}})</option>
               {{/each}}

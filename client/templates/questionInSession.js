@@ -35,15 +35,24 @@ Template.questionInSession.helpers({
 //    console.log("show votes: "+qid+" "+sid);
     if(qis)return qis.showVotes;    
   },
-  percentVotes:function(){
-    var question=Template.parentData(1);
-    var answers=question.answers;
-    var nAnswers=answers.length;
-    var votes=0;
+  numVotes:function(index){
+    var qid= Template.parentData(1)._id;
+    var sid=Template.parentData(2)._id;
+    var qis=QuestionsInSessions.findOne({$and:[{questionId:qid},{sessionId:sid}]});
+    return qis.votes[index];    
+  },
+  percentVotes:function(index){
+    var qid= Template.parentData(1)._id;
+    var sid=Template.parentData(2)._id;
+    var qis=QuestionsInSessions.findOne({$and:[{questionId:qid},{sessionId:sid}]});
+    var votes=qis.votes;
+    var nVotes=0;
+    var nAnswers=votes.length;
     for(var i=0;i<nAnswers;i++){
-      votes+=answers[i].votes;
+      nVotes+=votes[i];
     }
-    return 100*this.votes/votes;
+    if(nVotes==0)return 0;
+    else return 100*votes[index]/nVotes;
   }
 
 
@@ -72,8 +81,8 @@ Template.questionInSession.events({
     //Create/update a response record for this question
     //First check if user has already responded to this question, if yes, update the response record
     var uid=Meteor.userId();
-    var response=Responses.findOne({$and:[{questionId:qid},{userId:uid}]});
     var sid=Template.parentData()._id;
+    var response=Responses.findOne({$and:[{questionId:qid},{userId:uid},{sessionId:sid}]});
     if(response==undefined){
       response={
         userId:uid,
@@ -86,9 +95,14 @@ Template.questionInSession.events({
     else{
       Responses.update(response._id,{$push:{responses:answerStates} });      
     }
-    response=Responses.findOne({$and:[{questionId:qid},{userId:uid}]});
-    var qis=QuestionsInSessions.find({$and:[{questionId:qid},{sessionId:sid}]});
-    QuestionsInSessions.update(qis._id,{$push:{responseIds:response._id}});
+    response=Responses.findOne({$and:[{questionId:qid},{userId:uid},{sessionId:sid}]});
+    var qis=QuestionsInSessions.findOne({$and:[{questionId:qid},{sessionId:sid}]});
+    var votes=qis.votes;
+    for(var i=0;i<nAnswers;i++){
+      if(answerStates[i]==1)votes[i]=votes[i]+1;
+    }
+
+    QuestionsInSessions.update(qis._id,{$push:{responseIds:response._id},$set:{votes:votes}});
     //update the votes for the answers:
     var answers=Questions.findOne({_id:qid}).answers;
     for(var i=0;i<nAnswers;i++){

@@ -194,7 +194,9 @@ Router.route('/course/:courseId/session/delete/:sessionId',{
 Router.route('/course/:courseId/session/:sessionId/add/question/:questionId',{
   template:'sessionEdit',
   onBeforeAction:function(){
-    if(QuestionsInSessions.findOne({_id:this.params.questionId})==undefined){
+    if(QuestionsInSessions.findOne({$and:[{questionId:this.params.questionId},{sessionId:this.params.sessionId}]})==undefined){
+      var question=Questions.findOne({_id:this.params.questionId});
+      var nAnswers=question.answers.length;
       var questionInSession={
         questionId:this.params.questionId,
         sessionId:this.params.sessionId,
@@ -202,6 +204,7 @@ Router.route('/course/:courseId/session/:sessionId/add/question/:questionId',{
         maxSubmits:1,
         isActive:false,
         showVotes:true,
+        votes:Array(nAnswers).fill(0),
         responseIds:[]
       };
       QuestionsInSessions.insert(questionInSession);

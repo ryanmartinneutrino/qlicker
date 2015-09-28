@@ -1,13 +1,7 @@
 //TODO: dropzone accept does not set fileURl for the submit button to understand...
 
 Template.newQuestion.rendered = function(){
-
-    var arrayOfImageIds = [];
-
     Dropzone.autoDiscover = false;
-    // Adds file uploading and adds the imageID of the file uploaded
-    // to the arrayOfImageIds object.
-
     var dropzone = new Dropzone("form#dropzone", {
         dictDefaultMessage:"Click or drag and drop an image",
         accept: function(file, done){
@@ -17,10 +11,7 @@ Template.newQuestion.rendered = function(){
                 } else {
                   // gets the ID of the image that was uploaded
                   var imageId = fileObj._id;
-                  // do something with this image ID, like save it somewhere
-                  arrayOfImageIds.push(imageId);
-                  Session.setPersistent("fileUrl",fileObj.url);
-                  //console.log("fileurl: "+fileObj.url);
+                  Session.set("imageId",imageId);
                 };
             });
         }
@@ -30,7 +21,7 @@ Template.newQuestion.rendered = function(){
 
 Template.newQuestion.onRendered(function(){
 
-  Session.setPersistent("fileUrl","");
+  Session.set("fileUrl","");
   var validator =  $('.newQuestion').validate({
     submitHandler:  function(event){
       var qtitle = $('[name=qtitle]').val();
@@ -38,14 +29,19 @@ Template.newQuestion.onRendered(function(){
       var nAnswers=Session.get("nAnswers");
       var courseId = $('[name=selectCourse]').val();
       var answers = [];
+      var date= new Date();
+      var fileUrl="";
+      var image=Images.findOne({_id:Session.get("imageId")});
+      if(image)fileUrl=image.url();
+      //TODO: NEED TO FILL ANSWERKEY WITH ISCORRECT ARRAY
       for(var i=0;i<nAnswers;i++){
         ansId="ans_"+i;
         if(nAnswers<2){
-          answers.push({ansId:i,ans: $("[name="+ansId+"]").val(), votes:0});
+          answers.push({ansId:i,ans: $("[name="+ansId+"]").val()});
         }
         else{
           var isCorrect = $("[name="+ansId+"_correct]").is(":checked");
-          answers.push({ansId:i,ans: $("[name="+ansId+"]").val(), isCorrect:isCorrect, votes:0});
+          answers.push({ansId:i,ans: $("[name="+ansId+"]").val(), isCorrect:isCorrect});
         }
       }
       var question = {
@@ -55,13 +51,21 @@ Template.newQuestion.onRendered(function(){
         nAnswers:nAnswers,
         answers:answers,
         createdById:Meteor.userId(),
-        fileUrl:Session.get("fileUrl")        
+        createdAt:date,
+        fileUrl:fileUrl        
       };
       var qid=Questions.insert(question);
       Courses.update(courseId,{
         $push: {questionIds:qid}
       });
-      Router.go('/');
+      var answerKey={
+        questionId:qid,
+        answers:answers,//<<---- TODO HERE!!!!!
+        createdById:Meteor.userId(),
+        createdAt:date
+      }
+     AnswerKeys.insert(answerKey);
+     Router.go('/');
    }
   });//end of validate()
 });
@@ -73,6 +77,11 @@ Template.newQuestion.onCreated(function(){
 Template.newQuestion.helpers({
   image: function(){
     return Images.find().fetch()[1];
+  },
+  fileUrl: function(){
+   var imageId=Session.get("imageId");
+   if(imageId)return Images.findOne({_id:imageId}).url();
+   else return "";
   },
   loggedIntoCourse: function(){
     var currentCourse=Session.get("currentCourse");

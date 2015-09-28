@@ -1,4 +1,5 @@
 Questions = new Mongo.Collection("questions");
+AnswerKeys = new Mongo.Collection("answerKeys");
 //Users to store additional information on users, out of the Meteor.users
 Users = new Mongo.Collection("qusers");
 Institutions = new Mongo.Collection("institutions");
