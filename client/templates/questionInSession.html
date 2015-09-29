@@ -6,7 +6,10 @@
 <button type="button" class="btn btn-default btn-block"> {{qtitle}}</button>
     {{#each answers}}
       <button type="button" class="btn btn-primary btn-block answerButton" name={{ansId}} data-toggle="button">
-       {{ans}} 
+       {{ans}}
+       {{#if showFeedback}}
+         <i class="{{showAnswerFeedback ansId}}"></i>
+       {{/if}} 
       </button>
       {{#if showVotes}}
         <div class="progress">

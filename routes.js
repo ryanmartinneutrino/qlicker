@@ -1,3 +1,5 @@
+//TODO:Adding questions to session should not be routes...
+
 Router.configure({
   layoutTemplate:'main-layout'
 });
@@ -204,6 +206,7 @@ Router.route('/course/:courseId/session/:sessionId/add/question/:questionId',{
         maxSubmits:1,
         isActive:false,
         showVotes:true,
+        showFeedback:false,
         votes:Array(nAnswers).fill(0),
         responseIds:[]
       };

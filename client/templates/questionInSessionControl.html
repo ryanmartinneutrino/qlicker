@@ -11,15 +11,29 @@
     </div>
   {{/if}}
 
-  {{#if isShowingVotes}}
+  {{#if showVotes}}
     <div class="btn-group">
-      <button class="btn btn-success showVotesButton">showVotes</button>
+      <button class="btn btn-success showVotesButton">hide votes</button>
     </div>
   {{else}}
     <div class="btn-group">
-      <button class="btn btn-danger showVotesButton">showVotes</button>
+      <button class="btn btn-danger showVotesButton">show votes</button>
     </div>
   {{/if}}
+  
+  {{#if showFeedback}}
+    <div class="btn-group">
+      <button class="btn btn-success showFeedbackButton">hide feedback</button>
+    </div>
+  {{else}}
+    <div class="btn-group">
+      <button class="btn btn-danger showFeedbackButton">show feedback</button>
+    </div>
+  {{/if}}
+
+  <div class="btn-group">
+    <button class="btn btn-danger resetVotesButton">Reset votes</button>
+  </div>
 
 
   <div class="btn-group btn-group-justified">

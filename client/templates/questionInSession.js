@@ -10,7 +10,7 @@ Template.questionInSession.onRendered(function(){
 });
 
 //TODO check if questionNoSubmit makes sense to be in this file
-
+//TODO do a better job of showing which buttons are clicked/selected
 
 Template.questionInSession.helpers({
   showSubmit:function(){
@@ -32,8 +32,42 @@ Template.questionInSession.helpers({
     var qid= Template.parentData(1)._id;
     var sid=Template.parentData(2)._id;
     var qis=QuestionsInSessions.findOne({$and:[{questionId:qid},{sessionId:sid}]});
-//    console.log("show votes: "+qid+" "+sid);
-    if(qis)return qis.showVotes;    
+    if(qis)return qis.showVotes; 
+    else return false;   
+  },
+  showFeedback:function(){
+    var qid= Template.parentData(1)._id;
+    var sid=Template.parentData(2)._id;
+    var qis=QuestionsInSessions.findOne({$and:[{questionId:qid},{sessionId:sid}]});
+    if(qis)return qis.showFeedback;
+    else return false;
+  },
+  //TODO: Not clear when to show feedback if there are multiple responses by the user.
+  showAnswerFeedback:function(index){
+    var qid=Template.parentData(1)._id;
+    var sid=Template.parentData(2)._id;
+    var uid=Meteor.userId();
+    var questionInSession=QuestionsInSessions.findOne({$and:[{questionId:qid},{sessionId:sid}]});
+    var maxSubmits=1;
+    if(questionInSession)maxSubmits=questionInSession.maxSubmits;
+
+    var responseByUser=Responses.findOne({$and:[ {userId:uid}, {questionId:qid}, {sessionId:sid} ]});
+    var nAnsByUser=0;
+    if(responseByUser!==undefined){
+      nAnsByUser=responseByUser.responses.length;
+    }
+    if(nAnsByUser<maxSubmits)return "";
+
+    var answerKey=AnswerKeys.findOne({questionId:qid});
+    var answerStates = Session.get(qid+"AnswerStates");
+    var correct="glyphicon glyphicon-ok";   
+    var incorrect="glyphicon glyphicon-remove";   
+    if(answerStates && answerKey){
+      if(responseByUser.responses[nAnsByUser-1][index]&&answerKey.answers[index].isCorrect)return correct;
+      else if (!responseByUser.responses[nAnsByUser-1][index]&&!answerKey.answers[index].isCorrect)return correct;
+      else return incorrect;
+    }
+    else return "";
   },
   numVotes:function(index){
     var qid= Template.parentData(1)._id;
