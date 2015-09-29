@@ -1,4 +1,4 @@
-//TODO: dropzone accept does not set fileURl for the submit button to understand...
+//TODO: dropzone does not work after an uploaded file is deleted 
 
 Template.newQuestion.rendered = function(){
     Dropzone.autoDiscover = false;
@@ -33,16 +33,17 @@ Template.newQuestion.onRendered(function(){
       var fileUrl="";
       var image=Images.findOne({_id:Session.get("imageId")});
       if(image)fileUrl=image.url();
-      //TODO: NEED TO FILL ANSWERKEY WITH ISCORRECT ARRAY
+      
+      var correctAnswers=[];
+
       for(var i=0;i<nAnswers;i++){
         ansId="ans_"+i;
-        if(nAnswers<2){
-          answers.push({ansId:i,ans: $("[name="+ansId+"]").val()});
+        answers.push({ansId:i,ans: $("[name="+ansId+"]").val()});
+        var isCorrect=true;
+        if(nAnswers>1){
+          isCorrect = $("[name="+ansId+"_correct]").is(":checked");
         }
-        else{
-          var isCorrect = $("[name="+ansId+"_correct]").is(":checked");
-          answers.push({ansId:i,ans: $("[name="+ansId+"]").val(), isCorrect:isCorrect});
-        }
+        correctAnswers.push({ansId:i,ans: $("[name="+ansId+"]").val(), isCorrect:isCorrect});
       }
       var question = {
         qtitle:qtitle,
@@ -60,7 +61,8 @@ Template.newQuestion.onRendered(function(){
       });
       var answerKey={
         questionId:qid,
-        answers:answers,//<<---- TODO HERE!!!!!
+        isPublic:isPublic,
+        answers:correctAnswers,
         createdById:Meteor.userId(),
         createdAt:date
       }
@@ -75,8 +77,14 @@ Template.newQuestion.onCreated(function(){
 });
 
 Template.newQuestion.helpers({
-  image: function(){
-    return Images.find().fetch()[1];
+  imageUploaded: function(){
+   var imageId=Session.get("imageId");
+   if(imageId){
+     return true;
+   }
+   else{
+     return false;
+   }
   },
   fileUrl: function(){
    var imageId=Session.get("imageId");
@@ -163,6 +171,12 @@ Template.newQuestion.events({
     var nAnswers=Session.get("nAnswers")-1;
     if(nAnswers<1)return;
     Session.set("nAnswers",nAnswers);
+  },
+  "click .deleteImageButton":function(event){
+    event.preventDefault();
+    var imageId=Session.get("imageId"); 
+    Images.remove(imageId);
+    Session.set("imageId","");
   },
 
   "submit .newQuestion":function(event){
