@@ -24,6 +24,18 @@ Router.route('/login',{
   template:'login'
 });
 
+Router.route('/forgotPassword',{
+  template:'forgotPassword'
+});
+
+Router.route('/resetPassword/:token',{
+  template:'resetPassword',
+  data: function(){
+    return this.params.token;
+  }
+});
+
+
 Router.route('/logout',{
   onBeforeAction: function(){
     Meteor.logout();

@@ -1,11 +1,20 @@
 
 Meteor.startup(function(){
-Images.allow({
-  'insert': function () {
-    // add custom authentication code here
-    return true;
-  }
-});
+  Images.allow({
+    'insert': function () {
+      // add custom authentication code here
+      return true;
+    }
+  });
+
+  Accounts.emailTemplates.resetPassword.text = function(user, url){
+    var token = url.substring(url.lastIndexOf('/')+1, url.length);
+    var newUrl = Meteor.absoluteUrl('resetPassword/' + token);
+    var str = 'Hello,\n';
+    str+= 'To reset your password, please click the following link:\n';
+    str+= newUrl;
+    return str;
+  }  
 
 /*
   //Add some data into the databases

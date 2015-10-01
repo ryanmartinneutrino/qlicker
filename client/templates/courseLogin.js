@@ -79,7 +79,7 @@ Template.courseLogin.events({
         $push: {enrolledUserIds:Meteor.userId()}
       });
       Users.update({_id:Meteor.user()._id}, { $push: {enrolledCourseIds:course._id} });
-      Session.setPeristent("currentCourse",course._id);
+      Session.setPersistent("currentCourse",course._id);
       Session.set("currentCourseEnroll","");
     }
   }

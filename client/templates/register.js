@@ -1,5 +1,13 @@
 Template.register.onRendered(function(){
   var validator =  $('.register').validate({
+    rules: {
+      passwordconf: {
+        equalTo:"#password"
+      }
+    },
+    messages:{
+      passwordconf:"passwords don't match!"
+    },
     submitHandler:  function(event){
       var email = $('[name=email]').val();
       var password = $('[name=password]').val();
