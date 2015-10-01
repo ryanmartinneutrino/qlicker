@@ -205,7 +205,7 @@ Router.route('/course/:courseId/session/:sessionId/add/question/:questionId',{
         courseId:this.params.courseId,
         maxSubmits:1,
         isActive:false,
-        showVotes:true,
+        showVotes:false,
         showFeedback:false,
         votes:Array(nAnswers).fill(0),
         responseIds:[]
