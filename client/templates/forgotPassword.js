@@ -19,6 +19,7 @@ Template.forgotPassword.events({
           }
         } else {
           console.log('Email Sent. Check your mailbox.');
+          Session.set('resetEmailSent',true);
         }
       });
 
@@ -30,6 +31,12 @@ Template.forgotPassword.events({
 if(this){
   Session.set('resetToken',this);
 }
+
+Template.forgotPassword.helpers({
+ resetEmailSent: function(){
+  return Session.get('resetEmailSent');
+ }
+});
 
 Template.resetPassword.helpers({
  resetPassword: function(){
@@ -52,6 +59,7 @@ Template.resetPassword.events({
         } else {
           console.log('Your password has been changed. Welcome back!');
           Session.set('resetToken', null);
+          Router.go('/login');
         }
       });
     //}
