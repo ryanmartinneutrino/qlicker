@@ -177,6 +177,7 @@ Router.route('/course/:courseId/session/stop/:sessionId',{
 
 
 
+
 Router.route('/course/:courseId/session/edit/:sessionId',{
   template:'sessionEdit',
   data: function(){

@@ -2,7 +2,7 @@
 <h4> Session {{sessionNumber}} <a href="/course/{{courseId}}">Back to course</a></h4>
 <div class="row">
 <div class="col-sm-6 col-sm-offset-3">
- {{#each questionsInSession}}
+ {{#each activeQuestionsInSession}}
    {{> questionInSession}}
  {{/each}}
 </div>

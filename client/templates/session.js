@@ -1,6 +1,6 @@
 
 Template.session.helpers({
-  questionsInSession:function(){
+  activeQuestionsInSession:function(){
     var ids=[];
     //ids=this.questionIds;
     var sid=this._id;

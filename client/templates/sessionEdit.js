@@ -12,7 +12,13 @@ Template.sessionEdit.helpers({
     questions=Questions.find({_id:{$in :inCourseIds}}); 
     return questions;
   },
-
+  availableQuestions:function(){
+    var inCourseIds=[];
+    if(this.course)inCourseIds=this.course.questionIds;
+    //questions=Questions.find({_id:{$in :inCourseIds}});
+    questions=Questions.find({});
+    return questions;
+  },
   questionsInSession:function(){
     var ids=[];
     if(this.session)ids=this.session.questionIds;
