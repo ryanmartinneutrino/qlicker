@@ -19,15 +19,22 @@ Template.sessionInCourseList.helpers({
   isActive:function(){
     if(this)return this.isActive;
     else return false;
-  }
+  },
 
+  backgroundColor:function(){
+    if(this){
+      if(this.isActive) return "";
+      else return "";
+    }
+    //else return "#F0F0F0";   
+    else return "";   
+  }
 
 });
 
 Template.sessionInCourseList.events({
 
-  "click .newSessionButton": function(event){
-    event.preventDefault();
+  "click .newSessionButton": function(){
     var course=Courses.findOne({_id:this._id});
     var nSessionsInCourse=0;
     if(course)nSessionsInCourse=course.sessionIds.length;
@@ -35,7 +42,6 @@ Template.sessionInCourseList.events({
     var session = {
       courseId:this._id,
       createdById:Meteor.userId(),
-//      current:false,
       sessionNumber:sessionNumber,
       questionIds:[] 
     }
@@ -52,6 +58,21 @@ Template.sessionInCourseList.events({
      Sessions.update({_id:this._id},{$set:{isActive:false}});
   },
 
+  "click .viewSessionButton":function(){
+     Router.go("/session/"+this._id);
+  },
+
+  "click .editSessionButton":function(){
+     Router.go("/session/edit/"+this._id);
+  },
+
+  "click .runSessionButton":function(){
+     Router.go("/session/run/"+this._id);
+  },
+
+  "click .deleteSessionButton":function(){
+    Sessions.update({_id:this._id},{$set:{courseId:"",originalCourseId:this._id}});   
+  },
 
 });
 

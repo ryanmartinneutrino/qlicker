@@ -4,6 +4,12 @@
     <div class="col-sm-12">
         <div class="col-sm-6 col-sm-offset-3 column">
           <h4> Create a new question:</h4>
+          <div class="btn-group" style="margin-bottom:5px">
+              <button class="btn mcButton" style="">Mult. choice</button>
+              <button class="btn tfButton" style="background:#F0F0F0;">True/False</button>
+              <button class="btn ynButton" style="">Yes/No</button>
+          </div>
+
           {{#if imageUploaded}}
             <img class="img-responsive" src="{{fileUrl}}"/>
             <button class="btn btn-danger deleteImageButton"> Delete!</button>            

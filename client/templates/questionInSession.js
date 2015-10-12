@@ -46,8 +46,23 @@ Template.questionInSession.helpers({
   showAnswerFeedback:function(index){
     var qid=Template.parentData(1)._id;
     var sid=Template.parentData(2)._id;
+    var questionInSession=QuestionsInSessions.findOne({$and:[{questionId:qid},{sessionId:sid}]});
+    if(questionInSession && !questionInSession.showFeedback)return ""; 
+    var answerKey=AnswerKeys.findOne({questionId:qid});
+    var correct="glyphicon glyphicon-ok";   
+    var incorrect="glyphicon glyphicon-remove";   
+    if(answerKey){
+      if(answerKey.answers[index].isCorrect)return correct;
+      else return incorrect;
+    }
+    else return "";
+  },
+  correctButton:function(index){
+    var qid=Template.parentData(1)._id;
+    var sid=Template.parentData(2)._id;
     var uid=Meteor.userId();
     var questionInSession=QuestionsInSessions.findOne({$and:[{questionId:qid},{sessionId:sid}]});
+    if(questionInSession && !questionInSession.showFeedback)return "btn-primary"; 
     var maxSubmits=1;
     if(questionInSession)maxSubmits=questionInSession.maxSubmits;
 
@@ -60,15 +75,34 @@ Template.questionInSession.helpers({
 
     var answerKey=AnswerKeys.findOne({questionId:qid});
     var answerStates = Session.get(qid+"AnswerStates");
-    var correct="glyphicon glyphicon-ok";   
-    var incorrect="glyphicon glyphicon-remove";   
+    var correct="btn-success";
+    var incorrect="btn-danger";
     if(answerStates && answerKey){
       if(responseByUser.responses[nAnsByUser-1][index]&&answerKey.answers[index].isCorrect)return correct;
       else if (!responseByUser.responses[nAnsByUser-1][index]&&!answerKey.answers[index].isCorrect)return correct;
       else return incorrect;
     }
-    else return "";
+    else return "btn-primary";
   },
+
+  wasChecked:function(index){
+    var qid=Template.parentData(1)._id;
+    var sid=Template.parentData(2)._id;
+    var uid=Meteor.userId();
+
+    var responseByUser=Responses.findOne({$and:[ {userId:uid}, {questionId:qid}, {sessionId:sid} ]});
+    var nAnsByUser=0;
+    if(responseByUser!==undefined){
+      nAnsByUser=responseByUser.responses.length;
+    }
+
+    var checked="glyphicon glyphicon-asterisk";
+    var unchecked="";
+    if(responseByUser.responses[nAnsByUser-1][index])return checked;
+    else return unchecked;
+
+  },
+  
   numVotes:function(index){
     var qid= Template.parentData(1)._id;
     var sid=Template.parentData(2)._id;

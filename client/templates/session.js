@@ -24,10 +24,6 @@ Template.session.helpers({
 
 });
 
-Template.sessionList.events({
-
-
-});
 
 
 

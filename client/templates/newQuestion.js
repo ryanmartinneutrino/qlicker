@@ -155,11 +155,28 @@ Template.newQuestion.events({
     Session.setPersistent("currentCourse",$('[id=selectCourse]').val());
   },
  
-  "ondrop .upload-drop-zone":function(event){
-    event.preventDefault();
-    console.log(event.dataTransfer.files);
+  "click .mcButton":function(event){
+    var nAnswers=Session.get("nAnswers");
+    if(nAnswers<2){
+      Session.set("nAnswers",2);
+    }
   },
 
+//TODO clicking adds the second answer but only fills the True (presumably it doesn't create the second one at the right time)
+
+  "click .tfButton":function(event){
+    Session.set("nAnswers",2);
+    $('#ans_0').val("True");
+    $('#ans_1').val("False");
+    
+  },
+
+  "click .ynButton":function(event){
+    Session.set("nAnswers",2);
+    $('#ans_0').val("Yes");
+    $('#ans_1').val("No");
+  },
+ 
   "click .addAnswerButton":function(event){
     event.preventDefault();
     var nAnswers=Session.get("nAnswers")+1;
@@ -183,9 +200,7 @@ Template.newQuestion.events({
     event.preventDefault();
 
   }
-
-
-
+  
 });
 
 

@@ -1,8 +1,9 @@
 <template name="sessionInCourseList">
-  <div class="row" style="display:flex; align-items:center; margin-top:12px; margin-bottom:12px;">
-    <div class="column col-sm-6 col-sm-offset-3">
-      {{#each sessions}}
-        <a href="/session/{{_id}}">View session {{sessionNumber}}</a>
+<h3>Session List</h3>
+  {{#each sessions}}
+  <div class="row" style="display:flex; align-items:center; margin-top:12px; margin-bottom:12px; background:{{backgroundColor}} ;">
+    <div class="column col-sm-6 ">
+        <button class="btn btn-primary viewSessionButton">Session {{sessionNumber}}</button>
         {{#if isOwner}}
           <div class="btn-group ">
             {{#if isActive}}
@@ -11,18 +12,35 @@
               </div>
             {{else}}
               <div class="btn-group">
-                <button class="btn btn-success activateSessionnButton">Activate</button>
+                <button class="btn btn-danger activateSessionButton">Activate</button>
               </div>
-            {{/if}}  
+            {{/if}}
+            <div class="btn-group">
+              <button class="btn btn-warning  editSessionButton"><span class="glyphicon glyphicon-pencil"></span>  Edit</button>
+            </div>
+            {{#if isActive}}
+              <div class="btn-group">
+                <button class="btn btn-info runSessionButton"><span class="glyphicon glyphicon-play"></span>  Run</button>
+              </div>
+            {{else}}
+              <div class="btn-group">
+                <button class="btn btn-danger deleteSessionButton"><span class="glyphicon glyphicon-trash"></span>  Delete</button>
+              </div>
+            {{/if}}
+ 
           </div>
         {{/if}}
-      {{/each}}  
+      </div>
+    </div>
+  {{/each}}  
 
-      {{#if isOwner}}
+  {{#if isOwner}}
+  <div class="row" style="display:flex; align-items:center; margin-top:12px; margin-bottom:12px;">
+    <div class="column col-sm-6 ">
         <button class="btn btn-default btn-block newSessionButton">
           <span class="glyphicon glyphicon-plus"></span> New session
         </button>
-      {{/if}}
     </div>
   </div>
+  {{/if}}
 </template>

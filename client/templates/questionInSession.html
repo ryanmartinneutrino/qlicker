@@ -4,11 +4,12 @@
 
 <button type="button" class="btn btn-default btn-block"> {{qtitle}}</button>
     {{#each answers}}
-      <button type="button" class="btn btn-primary btn-block answerButton" name={{ansId}} data-toggle="button">
-       {{ans}}
+      <button type="button" class="btn {{correctButton ansId}} btn-block answerButton" name={{ansId}} data-toggle="button">
        {{#if showFeedback}}
+         <i class="{{wasChecked ansId}}"></i>
          <i class="{{showAnswerFeedback ansId}}"></i>
        {{/if}} 
+       {{ans}}
       </button>
       {{#if showVotes}}
         <div class="progress">

@@ -10,7 +10,14 @@ Template.sessionRun.helpers({
  
 });
 
+Template.sessionRun.events({
 
+  "click .editSessionButton":function(){
+    Router.go("/session/edit/"+this._id);
+  }
+
+
+});
 
 
 
