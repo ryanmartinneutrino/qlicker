@@ -129,7 +129,7 @@ Router.route('/question/:_id',{
 });
 */
 
-Router.route('/course/:courseId/session/:sessionId',{
+Router.route('/session/:sessionId',{
   template:'session',
   onBeforeAction: function(){
     this.next();
@@ -141,26 +141,23 @@ Router.route('/course/:courseId/session/:sessionId',{
 
 });
 
-Router.route('/course/:courseId/session/run/:sessionId',{
+Router.route('/session/run/:sessionId',{
   template:'sessionRun',
   onBeforeAction:function(){
-    var courseId=this.params.courseId;
     var sessionId=this.params.sessionId;
-    Courses.update({_id:courseId},{$set:{currentSessionId:sessionId}});
+    session=Sessions.findOne({_id:sessionId});
+    var courseId=session.courseId;
+    if(courseId) Courses.update({_id:courseId},{$set:{currentSessionId:sessionId}});
     this.next();
   },
   data: function(){
-    var courseId=this.params.courseId;
     var sessionId=this.params.sessionId;
-
-    return {course:Courses.findOne({_id:courseId}),
-            session:Sessions.findOne({_id:sessionId})};
-
+    return Sessions.findOne({_id:sessionId});
   }
 
 });
-
-Router.route('/course/:courseId/session/stop/:sessionId',{
+/*
+Router.route('/session/stop/:sessionId',{
   template:'course',
   onBeforeAction:function(){
     var courseId=this.params.courseId;
@@ -174,22 +171,15 @@ Router.route('/course/:courseId/session/stop/:sessionId',{
   }
 
 });
-
-
-
-
-Router.route('/course/:courseId/session/edit/:sessionId',{
+*/
+Router.route('/session/edit/:sessionId',{
   template:'sessionEdit',
   data: function(){
-    var courseId=this.params.courseId;
     var sessionId=this.params.sessionId;
-
-    return {course:Courses.findOne({_id:courseId}),
-            session:Sessions.findOne({_id:sessionId})};
-
+    return Sessions.findOne({_id:sessionId});
   }
-
 });
+
 
 Router.route('/course/:courseId/session/delete/:sessionId',{
   template:'course',
@@ -205,7 +195,7 @@ Router.route('/course/:courseId/session/delete/:sessionId',{
   
 });
 
-
+/*
 Router.route('/course/:courseId/session/:sessionId/add/question/:questionId',{
   template:'sessionEdit',
   onBeforeAction:function(){
@@ -255,7 +245,7 @@ Router.route('/course/:courseId/session/:sessionId/remove/question/:questionId',
   }
 
 });
-
+*/
 
 
 

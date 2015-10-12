@@ -1,0 +1,28 @@
+<template name="sessionInCourseList">
+  <div class="row" style="display:flex; align-items:center; margin-top:12px; margin-bottom:12px;">
+    <div class="column col-sm-6 col-sm-offset-3">
+      {{#each sessions}}
+        <a href="/session/{{_id}}">View session {{sessionNumber}}</a>
+        {{#if isOwner}}
+          <div class="btn-group ">
+            {{#if isActive}}
+              <div class="btn-group">
+                <button class="btn btn-success deactivateSessionButton">De-activate</button>
+              </div>
+            {{else}}
+              <div class="btn-group">
+                <button class="btn btn-success activateSessionnButton">Activate</button>
+              </div>
+            {{/if}}  
+          </div>
+        {{/if}}
+      {{/each}}  
+
+      {{#if isOwner}}
+        <button class="btn btn-default btn-block newSessionButton">
+          <span class="glyphicon glyphicon-plus"></span> New session
+        </button>
+      {{/if}}
+    </div>
+  </div>
+</template>

@@ -1,24 +1,30 @@
 
-Template.sessionList.helpers({
+Template.sessionInCourseList.helpers({
   sessions:function(){
-    return Sessions.find({courseId:this._id});
+    createdById=this.createdById;
+    if(Meteor.userId()==createdById){
+      return Sessions.find({courseId:this._id});
+    }
+    else{
+      return Sessions.find({$and:[{courseId:this._id},{isActive:true}]});
+    }
   },
 
-  ifOwner:function(){
+  isOwner:function(){
     createdById=this.createdById;
     if(Meteor.userId()==createdById)return true;
     else return false;
   },
 
-  isCurrentSession:function(){
-    var currentSessionId=Courses.findOne({_id:this.courseId}).currentSessionId;
-    if(currentSessionId==this._id)return true;
+  isActive:function(){
+    if(this)return this.isActive;
     else return false;
   }
 
+
 });
 
-Template.sessionList.events({
+Template.sessionInCourseList.events({
 
   "click .newSessionButton": function(event){
     event.preventDefault();
@@ -37,6 +43,15 @@ Template.sessionList.events({
     Courses.update({_id:this._id}, {$push: {sessionIds:sid}});
    // Router.go('/course/'+this._id+'/session/edit/'+sid);
   },
+  
+  "click .activateSessionButton": function(){
+     Sessions.update({_id:this._id},{$set:{isActive:true}});
+  },
+
+  "click .deactivateSessionButton": function(){
+     Sessions.update({_id:this._id},{$set:{isActive:false}});
+  },
+
 
 });
 

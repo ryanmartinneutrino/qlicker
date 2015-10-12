@@ -5,14 +5,14 @@
 
     <div class="col-sm-6 column">
       <h4>Session view:</h4>
-      {{>session this.session}}
+      {{>session this}}
     </div>
 
 
     <div class="col-sm-6 column">
       <h4>Session Management</h4>
-      <a href="/course/{{course._id}}/session/stop/{{session._id}}" class="btn btn btn-danger"><span class="glyphicon glyphicon-stop"></span>Stop!</a>
-      <br><a href="/course/{{course._id}}/session/edit/{{session._id}}">Edit</a><br>
+      <a href="/session/stop/{{_id}}" class="btn btn btn-danger"><span class="glyphicon glyphicon-stop"></span>Stop!</a>
+      <br><a href="session/edit/{{_id}}">Edit</a><br>
       <br>List of questions in session:<br>
 
 

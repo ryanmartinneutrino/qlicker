@@ -1,36 +1,12 @@
 <template name="sessionEdit">
-<h3>Course: {{course.name}} session: {{session.sessionNumber}} <a href="/course/{{course._id}}/session/{{session._id}}">view session</a> </h3>
+<h3> session: {{sessionNumber}} <a href="/course/{{course._id}}/session/{{session._id}}">view session</a> </h3>
 <div class="container-fluid">
-<div class="row">
-<div class="col-sm-12 column">
-{{#each availableQuestions}}
-  {{>addRemoveQuestionFromSession this }}  
-{{/each}}
-</div>
-</div>
-
-<div class="row">
-
-<div class="col-sm-4 column">
-<h4>Choose a question to add to session</h4>
-{{#each questionsFromCourse}}
-  <a href="/question/{{_id}}" >View</a>
-  <a href="/course/{{courseId ..}}/session/{{sessionId ..}}/add/question/{{_id}}" class="btn btn-default btn-block">{{qtitle}}</a>
-{{/each}}
-</div>
-
-
-
-<div class="col-sm-8 column">
-<h4>Questions in session</h4>
-{{#each questionsInSession}}
-  <a href="/course/{{courseId ..}}/session/{{sessionId ..}}/remove/question/{{_id}}">
-    remove</a>
-  <a href="/question/{{_id}}" class="btn btn-default btn-block " >{{qtitle}}</a>
-{{/each}}
-</div>
-
-
-</div>
+  <div class="row">
+    <div class="col-sm-12 column">
+      {{#each availableQuestions}}
+        {{>addRemoveQuestionFromSession this }}  
+      {{/each}}
+    </div>
+  </div>
 </div>
 </template>

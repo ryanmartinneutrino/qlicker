@@ -29,15 +29,14 @@
 
 
 <template name="questionNoSubmit">
-<div row>
-<div class="col-sm-12 column">
-<button type="button" class="btn btn-default btn-block"> {{qtitle}}</button>
-    {{#each answers}}
-      <button type="button" class="btn btn-primary btn-block answerButton" name={{ansId}} data-toggle="button">
-       {{ans}} {{#if showVotes}}  (Votes: {{votes}}) {{/if}}
-      </button>
-    {{/each}}
-</div>
+<div row  style=" margin-bottom: 12px; margin-top:12px; ">
+  <img class="img-responsive center-block" src="{{fileUrl}}" />
+  <button type="button" class="btn btn-default btn-block"> {{qtitle}}</button>
+  {{#each answers}}
+    <button type="button" class="btn btn-primary btn-block answerButton" name={{ansId}} data-toggle="button">
+    {{ans}} 
+    </button>
+  {{/each}}
 </div>
 </template>
 

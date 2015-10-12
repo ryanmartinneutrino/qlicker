@@ -1,4 +1,24 @@
 <template name="addRemoveQuestionFromSession">
-question {{_id}} and session {{sessionId}}
-<br>
+
+<div class="row" style="display:flex; align-items:center; margin-top:12px; margin-bottom:12px; ">
+  
+  <div class="col-sm-2 col-sm-offset-3">
+    <div class="btn-group ">
+
+      {{#if isInSession}}
+        <div class="btn-group">
+          <button class="btn btn-danger removeQuestionFromSessionButton">Remove from session</button>
+        </div>
+      {{else}}
+        <div class="btn-group">
+          <button class="btn btn-success addQuestionToSessionButton">Add to session</button>
+        </div>
+      {{/if}}
+
+    </div>
+  </div>
+  <div class="col-sm-3">
+     {{>questionNoSubmit this}}
+  </div>
+</div>
 </template>
